@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Math Hainaut website" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="${stylesheet}">
+
+    <title>${title} - Math Hainaut</title>
+    
+    <meta name="author" content="Math Hainaut" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: {
+          extensions: ["tex2jax.js","AMSmath.js", "AMSsymbols.js"]
+          },
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          processEscapes: true
+          },
+        "HTML-CSS": {
+          availableFonts: ["TeX"]
+          },
+        jax: ["input/TeX","output/HTML-CSS"]
+      });
+    </script>
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+ <!--   <script type="text/javascript"
+       src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMSS-MML_HTMLorMML">
+    </script>-->
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+					<h1 id="project_title">
+						<a id="project_title" href="${index}">Math Hainaut</a>
+				  </h1>
+          <span ml:replace="menu">Menu</span>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <span ml:replace="main">Main text area.</span>
+      </section>
+    </div>
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Ce site est créé et géré par <a href="https://github.com/mathhainaut">Math Hainaut</a>, et publié grâce aux <a href="http://pages.github.com">pages GitHub</a>.</p>
+        <p>E-mail: <span ml:replace="email">l'adresse e-mail defined in locations.ml</span>.</p>
+       <a id="forkme_banner" href="https://github.com/mathhainaut/mathhainaut.github.io">Voir le code source du site</a>
+      </footer>
+    </div>
+  </body>
+</html>
