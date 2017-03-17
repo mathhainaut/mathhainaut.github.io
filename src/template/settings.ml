@@ -15,5 +15,26 @@ let page_order = [
   "contact.html",6
 ]
 
+let map = "https://umap.openstreetmap.fr/fr/map/zones-dintervention_133043"
+let map_options =
+  let first = ref true in
+  let symb () =
+    if !first then (first:= false; "?") else "&"
+  in
+  List.fold_left (fun s (t,b) ->
+                    s^(symb ())^t^"="^b)
+    map ["scaleControl","true";
+         "miniMap","false";
+         "scrollWheelZoom","false";
+         "zoomControl","true";
+         "allowEdit","false";
+         "moreControl","false";
+         "searchControl","true";
+         "tilelayersControl","null";
+         "embedControl","null";
+         "datalayersControl","true";
+         "onLoadPanel","undefined";
+         "captionBar","true"]
+
 (* This construction is intended to avoid spam.*)
 let email = "math"^"hainaut@"^"fr"^"ee.fr"

@@ -58,6 +58,8 @@ let () =
   let b = Weberizer.Binding.make() in
   if !stop_on_error then
     Weberizer.Binding.on_error b (fun v a e -> raise e);
+  Weberizer.Binding.string b "map" Settings.map;
+  Weberizer.Binding.string b "map_options" Settings.map_options;
   let langs = [Settings.main_lang] in
   let out_dir lang = if lang = Settings.main_lang then "./" else lang in
 
