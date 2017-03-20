@@ -51,6 +51,62 @@ let spec = [
    " stop the build if an error is encountered");
 ]
 
+let timetable _ s =
+  let today = Date.today ()
+  and now = Date.now ()
+  in
+  let filterer =
+    let cmp =
+      match s with (* Beware on reading! *)
+        ["done"] -> (<=) 0
+      | ["next"] -> (>=) 0
+      | _ -> invalid_arg "timetable"
+    in
+    fun (x,_) -> cmp (Date.diff_days x today)
+  in
+  List.fold_left
+    (fun html (date, events) ->
+       let html_date =
+         let line = Date.(Printf.sprintf "%a %s" (fun () -> function
+                                                    Mon -> "Lundi"
+                                                  | Tue -> "Mardi"
+                                                  | Wed -> "Mercredi"
+                                                  | Thu -> "Jeudi"
+                                                  | Fri -> "Vendredi"
+                                                  | Sat -> "Samedi"
+                                                  | Sun -> "Dimanche")
+                            (weekday date) (format_t date))
+         in
+         Nethtml.Data line
+       in
+       let html_events =
+         List.fold_left
+           (fun html2 (p,w,l) ->
+              let line =
+                Printf.sprintf "%s-%s : %s, %s"
+                  (Date.format_s (fst p)) (Date.format_s (snd p))
+                  w l
+              in
+              let data =
+                [Nethtml.Data
+                   (Netconversion.convert
+                      ~in_enc:(
+                        Netconversion.encoding_of_string  "iso-8859-1")
+                      ~out_enc:(
+                        Netconversion.encoding_of_string  "utf8")
+                      line
+                   )]
+              in
+              Nethtml.Element("li",[], data)::html2)
+           [] events
+       in
+       Nethtml.Element("li",[],[html_date;
+                                Nethtml.Element("ul",[],html_events)])
+       :: html)
+    [] (List.filter filterer Timetable.t)
+
+
+
 let () =
   eprintf "Starting generation\n%!";
   Arg.parse (Arg.align spec) (fun _ -> raise(Arg.Bad "no anonymous arguments"))
@@ -60,6 +116,8 @@ let () =
     Weberizer.Binding.on_error b (fun v a e -> raise e);
   Weberizer.Binding.string b "map" Settings.map;
   Weberizer.Binding.string b "map_options" Settings.map_options;
+  Weberizer.Binding.fun_html b "timetable" timetable;
+
   let langs = [Settings.main_lang] in
   let out_dir lang = if lang = Settings.main_lang then "./" else lang in
 
