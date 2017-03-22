@@ -50,7 +50,8 @@ let make (md, y) =
 let mk d m y = {day=d;month=m;year=y}
 
 let format t = Printf.sprintf "%02d%02d%04d" t.day t.month t.year
-let format_t t = Printf.sprintf "%02d/%02d/%04d" t.day t.month t.year
+let format_t ?(sep="/") t =
+  Printf.sprintf "%02d%s%02d%s%04d" t.day sep t.month sep t.year
 let format_ymd t = Printf.sprintf "%04d%02d%02d" t.year t.month t.day
 
 let today () =

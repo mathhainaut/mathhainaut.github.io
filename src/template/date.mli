@@ -19,7 +19,7 @@ val month_length : int -> int -> int
 val make : month * int -> t
 
 val format : t -> string
-val format_t : t -> string
+val format_t : ?sep:string -> t -> string
 val format_ymd : t -> string
 
 val today : unit -> t

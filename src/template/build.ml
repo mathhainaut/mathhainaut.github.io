@@ -111,13 +111,16 @@ let () =
   eprintf "Starting generation\n%!";
   Arg.parse (Arg.align spec) (fun _ -> raise(Arg.Bad "no anonymous arguments"))
     "build <options>";
-  let b = Weberizer.Binding.make() in
-  if !stop_on_error then
-    Weberizer.Binding.on_error b (fun v a e -> raise e);
-  Weberizer.Binding.string b "map" Settings.map;
-  Weberizer.Binding.string b "map_options" Settings.map_options;
-  Weberizer.Binding.fun_html b "timetable" timetable;
-
+  let b =  Weberizer.Binding.make() in
+  let module B =  Weberizer.Binding in
+  begin
+    if !stop_on_error then
+      B.on_error b (fun v a e -> raise e);
+    B.string b "map" Settings.map;
+    B.string b "map_options" Settings.map_options;
+    B.fun_html b "timetable" timetable;
+    B.string b "date_of_update" (Date.format_t (Date.today()));
+  end;
   let langs = [Settings.main_lang] in
   let out_dir lang = if lang = Settings.main_lang then "./" else lang in
 
