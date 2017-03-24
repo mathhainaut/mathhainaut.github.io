@@ -155,7 +155,6 @@ let t =
     make "Concours Capes" "Douai" Date.([single (Apr 3) "09:00-14:00";
                                          single (Apr 4) "09:00-14:00"]);
     cp "Nomain" Date.([single (Mar 23) "16:15-17:15"]);
-    cp "Camphin-en-Pévèle" Date.([single (Mar 6) "16:00-18:00"])
 ]
 in
 list_merge l
