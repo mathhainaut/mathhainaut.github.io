@@ -145,16 +145,22 @@ let t =
     cp "Coutiches"
       Date.(set (Every_ Sat)
               ~from: (Mar 25, 2017)
-              ~till: (Jun 30, 2017) "15:45-17:15");
+              ~till: (Jun 30, 2017)
+              ~except: [Apr 1, 2017] "15:45-17:15"
+            @
+           [single (Mar 31) "15:00-16:30"]);
     cp "Saméon"
       Date.(single (Mar 21) "18:00-20:00" ::
               set (Every_ Sat)
               ~from: (Mar 25, 2017)
-              ~till: (Jun 30, 2017) "17:45-19:45");
+              ~till: (Jun 30, 2017)
+              ~except:[Mar 25, 2017] "17:45-19:45");
     make "Concours Agreg" "Douai" Date.([single (Mar 23) "09:00-15:00"]);
     make "Concours Capes" "Douai" Date.([single (Apr 3) "09:00-14:00";
                                          single (Apr 4) "09:00-14:00"]);
     cp "Nomain" Date.([single (Mar 23) "16:15-17:15"]);
+    make "Non dispo" "Saint-Amand-les-Eaux" Date.([single (Apr 3) "16:00-17:30"]);
+    make "Non dispo" "Valenciennes" Date.([single (Apr 6) "13:45-14:30"]);
 ]
 in
 list_merge l
