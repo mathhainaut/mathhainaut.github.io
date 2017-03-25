@@ -52,59 +52,64 @@ let spec = [
 ]
 
 let timetable _ s =
+  let cmp, hide =
+    match s with (* Beware on reading! *)
+      ["done"] -> (fun d ->  d <= 0), false
+    | ["next"] -> (fun d ->  d > 14), true
+    | ["coming"] -> (fun d -> (d >= 0 && d <= 14)), false
+    | _ -> invalid_arg "timetable"
+  in
   let today = Date.today ()
   and now = Date.now ()
   in
-  let filterer =
-    let cmp =
-      match s with (* Beware on reading! *)
-        ["done"] -> (<=) 0
-      | ["next"] -> (>=) 0
-      | _ -> invalid_arg "timetable"
-    in
-    fun (x,_) -> cmp (Date.diff_days x today)
+  let filterer (x,_) = cmp (Date.diff_days today x)
   in
-  List.fold_left
-    (fun html (date, events) ->
-       let html_date =
-         let line = Date.(Printf.sprintf "%a %s" (fun () -> function
-                                                    Mon -> "Lundi"
-                                                  | Tue -> "Mardi"
-                                                  | Wed -> "Mercredi"
-                                                  | Thu -> "Jeudi"
-                                                  | Fri -> "Vendredi"
-                                                  | Sat -> "Samedi"
-                                                  | Sun -> "Dimanche")
-                            (weekday date) (format_t date))
+  let all_html =
+    List.fold_left
+      (fun html (date, events) ->
+         let html_date =
+           let line = Date.(Printf.sprintf "%a %s" (fun () -> function
+                                                      Mon -> "Lundi"
+                                                    | Tue -> "Mardi"
+                                                    | Wed -> "Mercredi"
+                                                    | Thu -> "Jeudi"
+                                                    | Fri -> "Vendredi"
+                                                    | Sat -> "Samedi"
+                                                    | Sun -> "Dimanche")
+                              (weekday date) (format_t date))
+           in
+           Nethtml.Data line
          in
-         Nethtml.Data line
-       in
-       let html_events =
-         List.fold_left
-           (fun html2 (p,w,l) ->
-              let line =
-                Printf.sprintf "%s-%s : %s, %s"
-                  (Date.format_s (fst p)) (Date.format_s (snd p))
-                  w l
-              in
-              let data =
-                [Nethtml.Data
-                   (Netconversion.convert
-                      ~in_enc:(
-                        Netconversion.encoding_of_string  "iso-8859-1")
-                      ~out_enc:(
-                        Netconversion.encoding_of_string  "utf8")
-                      line
-                   )]
-              in
-              Nethtml.Element("li",[], data)::html2)
-           [] events
-       in
-       Nethtml.Element("li",[],[html_date;
-                                Nethtml.Element("ul",[],html_events)])
-       :: html)
-    [] (List.filter filterer Timetable.t)
-
+         let html_events =
+           List.fold_left
+             (fun html2 (p,w,l) ->
+                let line =
+                  Printf.sprintf "%s-%s : %s, %s"
+                    (Date.format_s (fst p)) (Date.format_s (snd p))
+                    w l
+                in
+                let data =
+                  [Nethtml.Data
+                     (Netconversion.convert
+                        ~in_enc:(
+                          Netconversion.encoding_of_string  "iso-8859-1")
+                        ~out_enc:(
+                          Netconversion.encoding_of_string  "utf8")
+                        line
+                     )]
+                in
+                Nethtml.Element("li",[], data)::html2)
+             [] events
+         in
+         let li_args =
+           [html_date;
+            Nethtml.Element("ul",[],html_events)]
+         in
+         let li = [Nethtml.Element("li",[],li_args)] in
+         Nethtml.Element("span",["date", Date.format date], li) :: html)
+      [] (List.filter filterer Timetable.t)
+  in
+  [Nethtml.Element("ul",[],all_html)]
 
 
 let () =

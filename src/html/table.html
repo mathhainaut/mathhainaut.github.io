@@ -5,11 +5,26 @@
  	   <title>Disponibilités</title>
   </head>
   <body>
-      <p>Emploi du temps (dernière mise à jour au ${date_of_update}):</p>
-      <ul ml:content="timetable next"/>
+      <p>Dernière mise à jour au ${date_of_update} - prochaines contraintes:</p>
+      <div ml:content="timetable coming"/>
       
-      <p>Cours passés:</p>
-      <ul ml:content="timetable done"/>
+<script type="text/javascript">
+function toggle(which){
+if (!document.getElementById)
+return
+if (which.style.display=="block")
+which.style.display="none"
+else
+which.style.display="block"
+}
+</script>
+      <a href="javascript:toggle(document.getElementById('div_next'))">
+        Et plus tard</a> - 
+      <div id="div_next" style="display:none" ml:content="timetable next"/>
+      
+      <a href="javascript:toggle(document.getElementById('div_done'))">
+        Cours passés</a>
+     <div id="div_done" style="display:none" ml:content="timetable done"/>
 
   </body>
 </html>
