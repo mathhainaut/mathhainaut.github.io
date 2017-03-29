@@ -9,6 +9,17 @@
       <div ml:content="timetable coming"/>
       
 <script type="text/javascript">
+var current_date = Date.now()
+
+function setDisp(date){
+var date = new Date(date);
+var elapsed = current_date.getTime() - date.getTime();
+if (elapsed < 0)
+  return "display:none"
+else
+  return "display:block"
+}
+
 function toggle(which){
 if (!document.getElementById)
 return

@@ -104,10 +104,6 @@ let t =
                ~from:(Mar 20, 2017)
                ~till:(Jun 19, 2017)
                ~except:[May 1, 2017] "18:00-19:00");
-     cp "Auchy-lez-Orchies"
-       Date.(set (Every_ Wed)
-               ~from:(Mar 22, 2017)
-               ~till:(Jun 21, 2017) "16:30-18:00");
      cag "Valenciennes"
        Date.(set (Every_ Thu)
                ~from:(Mar 23, 2017)

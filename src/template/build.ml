@@ -106,7 +106,12 @@ let timetable _ s =
             Nethtml.Element("ul",[],html_events)]
          in
          let li = [Nethtml.Element("li",[],li_args)] in
-         Nethtml.Element("span",["date", Date.format date], li) :: html)
+         let span_args =
+           [
+            "style","javascript:setDisp("^(Date.format_t ~sep:"-" date)^")"
+           ]
+         in
+         Nethtml.Element("span",span_args, li) :: html)
       [] (List.filter filterer Timetable.t)
   in
   [Nethtml.Element("ul",[],all_html)]
