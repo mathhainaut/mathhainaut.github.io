@@ -101,9 +101,11 @@ let t =
                          event.ewhen))
     [cp "Nomain"
        Date.(set (Every_ Mon)
-               ~from:(Mar 20, 2017)
+               ~from:(Apr 10, 2017)
                ~till:(Jun 19, 2017)
-               ~except:[May 1, 2017] "18:00-19:00");
+               ~except:[Apr 10, 2017;
+                        Apr 17, 2017;
+                        May 1, 2017] "18:00-19:00");
      cag "Valenciennes"
        Date.(set (Every_ Thu)
                ~from:(Mar 23, 2017)
@@ -119,48 +121,41 @@ let t =
                         Apr 21, 2017] "17:30-19:30");
      cp "Fresnes-sur-Escaut"
        Date.(set (Every_ Sat)
-               ~from:(Mar 25, 2017)
+               ~from:(Apr 8, 2017)
                ~till:(Jun 3, 2017)
                ~except:[Apr 8, 2017;
                         Apr 15, 2017] "08:30-10:30");
      cp "Faumont"
        Date.(set (Every_1st Sat)
-               ~from: (Apr 1, 2017)
+               ~from: (May 6, 2017)
                ~till: (Jun 3, 2017) "11:15-12:15"
              @
                set (Every_ Sat)
-               ~from: (Mar 25, 2017)
+               ~from: (Apr 22, 2017)
                ~till: (Jun 30, 2017)
                ~except:[Apr 1, 2017;
                         Apr 8, 2017;
                         Apr 15, 2017;
                         May 6, 2017;
                         Jun 3, 2017] "11:15-13:15");
-    cp "Flines-lez-Râches"
-      Date.(set (Every_ Sat)
-              ~from: (Mar 25, 2017)
-              ~till: (Jun 30, 2017)
-              ~except:[Apr 8, 2017;
-                       Apr 15, 2017] "13:30-15:30");
-    cp "Coutiches"
-      Date.(set (Every_ Sat)
-              ~from: (Mar 25, 2017)
-              ~till: (Jun 30, 2017)
-              ~except: [Apr 1, 2017] "15:45-17:15"
-            @
-           [single (Mar 31) "15:00-16:30"]);
-    cp "Saméon"
-      Date.(single (Mar 21) "18:00-20:00" ::
-              set (Every_ Sat)
-              ~from: (Mar 25, 2017)
-              ~till: (Jun 30, 2017)
-              ~except:[Mar 25, 2017] "17:45-19:45");
-    make "Concours Agreg" "Douai" Date.([single (Mar 23) "09:00-15:00"]);
-    make "Concours Capes" "Douai" Date.([single (Apr 3) "09:00-14:00";
-                                         single (Apr 4) "09:00-14:00"]);
-    cp "Nomain" Date.([single (Mar 23) "16:15-17:15"]);
-    make "Non dispo" "Saint-Amand-les-Eaux" Date.([single (Apr 3) "16:00-17:30"]);
-    make "Non dispo" "Valenciennes" Date.([single (Apr 6) "13:45-14:30"]);
-]
-in
-list_merge l
+     cp "Flines-lez-Râches"
+       Date.(set (Every_ Sat)
+               ~from: (Apr 22, 2017)
+               ~till: (Jun 30, 2017) "13:30-15:30");
+     cp "Coutiches"
+       Date.(single (Apr 10) "11:30-13:00" ::
+               set (Every_ Sat)
+               ~from: (Apr 8, 2017)
+               ~till: (Jun 30, 2017)
+               ~except: [Apr 8, 2017;
+                         Apr 15, 2017] "15:45-17:15");
+     cp "Saméon"
+       Date.([single (Apr 8) "10:30-12:30"]);
+     make "CP-Stage" "Vieux-Condé" Date.(set Every_day
+                                           ~from: (Apr 10, 2017)
+                                           ~till: (Apr 14, 2017) "09:00-11:00");
+     make "CP-Stage" "Sars-et-Rosières" Date.([single (Apr 18) "09:00-11:00";
+                                               single (Apr 21) "09:00-11:00"]);
+    ]
+  in
+  list_merge l
