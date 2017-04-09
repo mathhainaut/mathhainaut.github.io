@@ -133,10 +133,7 @@ let t =
                set (Every_ Sat)
                ~from: (Apr 22, 2017)
                ~till: (Jun 30, 2017)
-               ~except:[Apr 1, 2017;
-                        Apr 8, 2017;
-                        Apr 15, 2017;
-                        May 6, 2017;
+               ~except:[May 6, 2017;
                         Jun 3, 2017] "11:15-13:15");
      cp "Flines-lez-Râches"
        Date.(set (Every_ Sat)
