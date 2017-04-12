@@ -108,17 +108,14 @@ let t =
                         May 1, 2017] "18:00-19:00");
      cag "Valenciennes"
        Date.(set (Every_ Thu)
-               ~from:(Mar 23, 2017)
+               ~from:(Apr 27, 2017)
                ~till:(Jul 6, 2017)
-               ~except:[Apr 13, 2017;
-                        Apr 20, 2017;
-                        May 25, 2017] "18:00-20:00");
+               ~except:[May 25, 2017] "18:00-20:00");
      cag "Valenciennes"
        Date.(set (Every_ Fri)
-               ~from:(Mar 24, 2017)
+               ~from:(Apr 28, 2017)
                ~till:(Jul 7, 2017)
-               ~except:[Apr 14, 2017;
-                        Apr 21, 2017] "17:30-19:30");
+               ~except:[] "17:30-19:30");
      cp "Fresnes-sur-Escaut"
        Date.(set (Every_ Sat)
                ~from:(Apr 8, 2017)
@@ -141,11 +138,10 @@ let t =
                ~till: (Jun 30, 2017) "13:30-15:30");
      cp "Coutiches"
        Date.(single (Apr 10) "11:30-13:00" ::
+               single (Apr 18) "11:30-13:00"::
                set (Every_ Sat)
-               ~from: (Apr 8, 2017)
-               ~till: (Jun 30, 2017)
-               ~except: [Apr 8, 2017;
-                         Apr 15, 2017] "15:45-17:15");
+               ~from: (Apr 22, 2017)
+               ~till: (Jun 30, 2017) "15:45-17:15");
      cp "Saméon"
        Date.([single (Apr 8) "10:30-12:30"]);
      make "CP-Stage" "Vieux-Condé" Date.(set Every_day
