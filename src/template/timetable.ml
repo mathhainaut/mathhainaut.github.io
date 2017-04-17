@@ -100,7 +100,9 @@ let t =
                                    event.ewhat, event.ewhere)
                          event.ewhen))
     [cp "Nomain"
-       Date.(set (Every_ Mon)
+       Date.(single (Apr 20) "09:00-10:00"::
+               single (Apr 21) "11:15-12:15"::
+               set (Every_ Mon)
                ~from:(Apr 10, 2017)
                ~till:(Jun 19, 2017)
                ~except:[Apr 10, 2017;
@@ -138,7 +140,7 @@ let t =
                ~till: (Jun 30, 2017) "13:30-15:30");
      cp "Coutiches"
        Date.(single (Apr 10) "11:30-13:00" ::
-               single (Apr 18) "11:30-13:00"::
+               single (Apr 20) "11:15-12:45"::
                set (Every_ Sat)
                ~from: (Apr 22, 2017)
                ~till: (Jun 30, 2017) "15:45-17:15");
@@ -147,7 +149,7 @@ let t =
      make "CP-Stage" "Vieux-Condé" Date.(set Every_day
                                            ~from: (Apr 10, 2017)
                                            ~till: (Apr 14, 2017) "09:00-11:00");
-     make "CP-Stage" "Sars-et-Rosières" Date.([single (Apr 18) "09:00-11:00";
+     make "CP-Stage" "Sars-et-Rosières" Date.([single (Apr 19) "09:00-11:00";
                                                single (Apr 21) "09:00-11:00"]);
     ]
   in
