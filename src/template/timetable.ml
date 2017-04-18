@@ -100,7 +100,7 @@ let t =
                                    event.ewhat, event.ewhere)
                          event.ewhen))
     [cp "Nomain"
-       Date.(single (Apr 20) "09:00-10:00"::
+       Date.(single (Apr 19) "09:00-10:00"::
                single (Apr 21) "11:15-12:15"::
                set (Every_ Mon)
                ~from:(Apr 10, 2017)
@@ -149,8 +149,9 @@ let t =
      make "CP-Stage" "Vieux-Condé" Date.(set Every_day
                                            ~from: (Apr 10, 2017)
                                            ~till: (Apr 14, 2017) "09:00-11:00");
-     make "CP-Stage" "Sars-et-Rosières" Date.([single (Apr 19) "09:00-11:00";
+     make "CP-Stage" "Sars-et-Rosières" Date.([single (Apr 20) "09:00-11:00";
                                                single (Apr 21) "09:00-11:00"]);
+     make "Non dispo" "Valenciennes" Date.([single (May 11) "17:00-18:00"])
     ]
   in
   list_merge l
