@@ -100,14 +100,12 @@ let t =
                                    event.ewhat, event.ewhere)
                          event.ewhen))
     [cp "Nomain"
-       Date.(single (Apr 19) "09:00-10:00"::
-               single (Apr 21) "11:15-12:15"::
+       Date.(single (Apr 25) "18:00-19:00" ::
+               single (Apr 26) "16:00-17:00" ::
+               single (May 4) "15:00-16:00" ::
                set (Every_ Mon)
-               ~from:(Apr 10, 2017)
-               ~till:(Jun 19, 2017)
-               ~except:[Apr 10, 2017;
-                        Apr 17, 2017;
-                        May 1, 2017] "18:00-19:00");
+               ~from:(May 15, 2017)
+               ~till:(Jun 19, 2017) "18:00-19:00");
      cag "Valenciennes"
        Date.(set (Every_ Thu)
                ~from:(Apr 27, 2017)
@@ -119,33 +117,30 @@ let t =
                ~till:(Jul 7, 2017)
                ~except:[] "17:30-19:30");
      cp "Fresnes-sur-Escaut"
-       Date.(set (Every_ Sat)
-               ~from:(Apr 8, 2017)
-               ~till:(Jun 3, 2017)
-               ~except:[Apr 8, 2017;
-                        Apr 15, 2017] "08:30-10:30");
+       Date.(single (Apr 29) "08:00-10:00" ::
+               set (Every_ Sat)
+               ~from:(May 6, 2017)
+               ~till:(Jun 3, 2017) "08:30-10:30");
      cp "Faumont"
        Date.(set (Every_1st Sat)
                ~from: (May 6, 2017)
                ~till: (Jun 3, 2017) "11:15-12:15"
              @
                set (Every_ Sat)
-               ~from: (Apr 22, 2017)
+               ~from: (Apr 29, 2017)
                ~till: (Jun 30, 2017)
                ~except:[May 6, 2017;
                         Jun 3, 2017] "11:15-13:15");
      cp "Flines-lez-Râches"
        Date.(set (Every_ Sat)
-               ~from: (Apr 22, 2017)
+               ~from: (Apr 29, 2017)
                ~till: (Jun 30, 2017) "13:30-15:30");
      cp "Coutiches"
-       Date.(single (Apr 10) "11:30-13:00" ::
-               single (Apr 20) "11:15-12:45"::
-               set (Every_ Sat)
-               ~from: (Apr 22, 2017)
+       Date.(set (Every_ Sat)
+               ~from: (Apr 29, 2017)
                ~till: (Jun 30, 2017) "15:45-17:15");
      cp "Saméon"
-       Date.([single (Apr 8) "10:30-12:30"]);
+       Date.([]);
      make "CP-Stage" "Vieux-Condé" Date.(set Every_day
                                            ~from: (Apr 10, 2017)
                                            ~till: (Apr 14, 2017) "09:00-11:00");
