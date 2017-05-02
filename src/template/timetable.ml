@@ -141,9 +141,9 @@ let t =
                ~till: (Jun 30, 2017) "15:45-17:15");
      cp "Saméon"
        Date.([]);
-     make "CP-Stage" "Vieux-Condé" Date.(set Every_day
-                                           ~from: (Apr 10, 2017)
-                                           ~till: (Apr 14, 2017) "09:00-11:00");
+     cp "Maulde"
+       Date.(single (May 6) "18:00-20:00" ::
+               single (May 8) "09:00-11:00" :: []);
      make "CP-Stage" "Sars-et-Rosières" Date.([single (Apr 20) "09:00-11:00";
                                                single (Apr 21) "09:00-11:00"]);
      make "Non dispo" "Valenciennes" Date.([single (May 11) "17:00-18:00"])
