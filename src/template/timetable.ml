@@ -102,110 +102,112 @@ let jun = true
 
 let t =
   let l = List.map (fun event ->
-                      (List.map (fun elt ->
-                                   let (d,p) = elt in
-                                   d, p,
-                                   event.ewhat, event.ewhere)
-                         event.ewhen))
-    [make "Non dispo" "Fresnes-sur-Escaut"
-       Date.([single (May 9) "08:30-11:00"]);
-     mk_fresnes 9 11 ~c:118 5 1;
-     mk_fresnes 10 10 3 1;
-     mk_fresnes 10 11 6 1;
-     mk_fresnes 11 10 6 1;
-     mk_fresnes 11 11 6 2;
-     mk_fresnes 12 8 3 1;
-     mk_fresnes 12 9 6 2;
-     mk_fresnes 15 8 6 1;
-     mk_fresnes 15 10 6 2;
-     mk_fresnes 15 11 6 2;
-     mk_fresnes 15 13 3 3;
-     mk_fresnes 15 14 3 1;
-     mk_fresnes 16 10 5 3 ~c:118;
-     mk_fresnes 16 11 3 1;
-     mk_fresnes 17 9 5 1 ~c:118;
-     mk_fresnes 17 10 3 1;
-     mk_fresnes 17 11 6 1;
-     mk_fresnes 18 10 6 1;
-     mk_fresnes 18 11 6 2;
-     mk_fresnes 19 8 3 1 ~c:218;
-     mk_fresnes 19 9 6 2;
-     mk_fresnes 19 10 6 1;
-     mk_fresnes 22 8 6 1;
-     mk_fresnes 22 10 6 2;
-     mk_fresnes 22 11 6 2;
-     mk_fresnes 22 13 3 3;
-     mk_fresnes 22 14 3 1;
-     mk_fresnes 22 15 6 1;
-     mk_fresnes 23 11 5 1 ~c:118;
-     mk_fresnes 23 10 6 2;
-     mk_fresnes 24 10 3 1;
-     mk_fresnes 24 11 6 1;
-     mk_fresnes 29 8 6 1;
-     mk_fresnes 29 11 6 2;
-     mk_fresnes 29 13 3 3 ~c:218;
-     mk_fresnes 29 14 3 1;
-     mk_fresnes 29 15 6 2;
-     mk_fresnes 30 10 5 3 ~c:118;
-     mk_fresnes 30 11 3 1;
-     mk_fresnes 31 9 5 1 ~c:118;
-     mk_fresnes 31 10 3 1;
-     mk_fresnes 31 11 6 1;
-     mk_fresnes ~jun 1 10 6 1;
-     mk_fresnes ~jun 1 11 6 2;
-     mk_fresnes ~jun 2 8 3 1;
-     mk_fresnes ~jun 2 9 6 2;
-     mk_fresnes ~jun 2 10 6 1;
-     mk_fresnes ~jun 6 10 6 2;
-     mk_fresnes ~jun 6 11 5 2 ~c:118;
-     mk_fresnes ~jun 7 10 3 1;
-     mk_fresnes ~jun 7 11 6 1;
-     mk_fresnes ~jun 8 10 6 1;
-     mk_fresnes ~jun 8 11 6 2;
-     mk_fresnes ~jun 9 8 3 1;
-     mk_fresnes ~jun 9 9 6 2;
-     mk_fresnes ~jun 9 10 6 1;
+                    (List.map (fun elt ->
+                               let (d,p) = elt in
+                               d, p,
+                               event.ewhat, event.ewhere)
+                              event.ewhen))
+		   [make "Non dispo" "Fresnes-sur-Escaut"
+			 Date.([single (May 9) "08:30-11:00"]);
+		    mk_fresnes 9 11 ~c:118 5 1;
+		    mk_fresnes 10 10 3 1;
+		    mk_fresnes 10 11 6 1;
+		    mk_fresnes 11 10 6 1;
+		    mk_fresnes 11 11 6 2;
+		    mk_fresnes 12 8 3 1;
+		    mk_fresnes 12 9 6 2;
+		    mk_fresnes 15 8 6 1;
+		    mk_fresnes 15 10 6 2;
+		    mk_fresnes 15 11 6 2;
+		    mk_fresnes 15 13 3 3;
+		    mk_fresnes 15 14 3 1;
+		    mk_fresnes 16 10 5 3 ~c:118;
+		    mk_fresnes 16 11 3 1;
+		    mk_fresnes 17 9 5 1 ~c:118;
+		    mk_fresnes 17 10 3 1;
+		    mk_fresnes 17 11 6 1;
+		    mk_fresnes 18 10 6 1;
+		    mk_fresnes 18 11 6 2;
+		    mk_fresnes 19 8 3 1 ~c:218;
+		    mk_fresnes 19 9 6 2;
+		    mk_fresnes 19 10 6 1;
+		    mk_fresnes 22 8 6 1;
+		    mk_fresnes 22 10 6 2;
+		    mk_fresnes 22 11 6 2;
+		    mk_fresnes 22 13 3 3;
+		    mk_fresnes 22 14 3 1;
+		    mk_fresnes 22 15 6 1;
+		    mk_fresnes 23 11 5 1 ~c:118;
+		    mk_fresnes 23 10 6 2;
+		    mk_fresnes 24 10 3 1;
+		    mk_fresnes 24 11 6 1;
+		    mk_fresnes 29 8 6 1;
+		    mk_fresnes 29 11 6 2;
+		    mk_fresnes 29 13 3 3 ~c:218;
+		    mk_fresnes 29 14 3 1;
+		    mk_fresnes 29 15 6 2;
+		    mk_fresnes 30 10 5 3 ~c:118;
+		    mk_fresnes 30 11 3 1;
+		    mk_fresnes 31 9 5 1 ~c:118;
+		    mk_fresnes 31 10 3 1;
+		    mk_fresnes 31 11 6 1;
+		    mk_fresnes ~jun 1 10 6 1;
+		    mk_fresnes ~jun 1 11 6 2;
+		    mk_fresnes ~jun 2 8 3 1;
+		    mk_fresnes ~jun 2 9 6 2;
+		    mk_fresnes ~jun 2 10 6 1;
+		    mk_fresnes ~jun 6 10 6 2;
+		    mk_fresnes ~jun 6 11 5 2 ~c:118;
+		    mk_fresnes ~jun 7 10 3 1;
+		    mk_fresnes ~jun 7 11 6 1;
+		    mk_fresnes ~jun 8 10 6 1;
+		    mk_fresnes ~jun 8 11 6 2;
+		    mk_fresnes ~jun 9 8 3 1;
+		    mk_fresnes ~jun 9 9 6 2;
+		    mk_fresnes ~jun 9 10 6 1;
 
-     cp "Nomain"
-       Date.(set (Every_ Mon)
-               ~from:(May 22, 2017)
-               ~till:(Jun 19, 2017) "18:00-19:00");
-     cag "Valenciennes"
-       Date.(set (Every_ Thu)
-               ~from:(Jun 1, 2017)
-               ~till:(Jun 15, 2017)
-               ~except:[May 25, 2017] "18:00-20:00");
-     cag "Valenciennes"
-       Date.(set (Every_ Fri)
-               ~from:(May 26, 2017)
-               ~till:(Jun 16, 2017)
-               ~except:[] "17:30-19:30");
-     cp "Fresnes-sur-Escaut"
-       Date.(set (Every_ Sat)
-               ~from:(May 20, 2017)
-               ~till:(Jun 3, 2017) "08:30-10:30");
-     cp "Faumont"
-       Date.(set (Every_ Sat)
-               ~from: (May 20, 2017)
-               ~till: (May 27, 2017) "11:15-13:15");
-     cp "Flines-lez-Râches"
-       Date.(single (May 26) "09:00-11:00" ::
-               set (Every_ Sat)
-               ~from: (May 20, 2017)
-               ~till: (Jun 17, 2017)
-               ~except:[May 27, 2017] "13:30-15:30");
-     cp "Coutiches"
-       Date.(single (May 26) "11:15-12:45" ::
-               set (Every_ Sat)
-               ~from: (Jun 3, 2017)
-               ~till: (Jun 17, 2017) "11:15-12:45");
-     cp "Saméon"
-       Date.([]);
-     make "Concours CAPES" "Nancy" Date.(single (Jun 14) "00:00-23:59" ::
-                                           single (Jun 15) "00:00-23:59" :: []);
-     make "Concours Agreg" "Lille" Date.(single (Jun 22) "00:00-23:59" ::
-                                           single (Jun 23) "00:00-23:59" ::
-                                           single (Jun 24) "00:00-23:59" :: [])
-     ]
+		    cp "Nomain"
+		       Date.(single (Jun 8) "16:00-17:00"
+			     :: single (Jun 8) "17:00-18:00"
+			     :: single (Jun 9) "12:00-13:00"
+			     :: set (Every_ Mon)
+				    ~from:(May 22, 2017)
+				    ~till:(Jun 19, 2017)
+				    ~except:[Jun 5, 2017] "18:00-19:00");
+		    cag "Valenciennes" [];
+		    cp "Fresnes-sur-Escaut"
+		       Date.(set (Every_ Sat)
+				 ~from:(May 20, 2017)
+				 ~till:(Jun 3, 2017) "08:30-10:30");
+		    cp "Faumont"
+		       Date.(set (Every_ Sat)
+				 ~from: (May 20, 2017)
+				 ~till: (May 27, 2017) "11:15-13:15");
+		    cp "Flines-lez-Râches"
+		       Date.(single (May 26) "09:00-11:00"
+			     :: single (Jun 6) "14:00-16:00"
+			     :: set (Every_ Sat)
+				     ~from: (May 20, 2017)
+				     ~till: (Jun 17, 2017)
+				     ~except:[May 27, 2017] "13:30-15:30");
+		    cp "Coutiches"
+		       Date.(single (May 26) "11:15-12:45"
+			     :: set (Every_ Sat)
+				   ~from: (Jun 3, 2017)
+				   ~till: (Jun 17, 2017) "11:15-12:45");
+		    cp "Saméon"
+		       Date.([]);
+		    cp "Nivelle"
+		       Date.([]);
+		    make "Concours CAPES" "Nancy"
+			 Date.(single (Jun 15) "00:00-23:59"
+			       :: single (Jun 16) "00:00-23:59"
+			       :: []);
+		    make "Concours Agreg" "Lille"
+			 Date.(single (Jun 22) "12:00-19:00"
+			       :: single (Jun 23) "08:00-19:00"
+			       :: single (Jun 24) "08:00-19:00"
+			       :: [])
+		   ]
   in
   list_merge l
