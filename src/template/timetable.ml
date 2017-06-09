@@ -167,9 +167,9 @@ let t =
 		    mk_fresnes ~jun 9 10 6 1;
 
 		    cp "Nomain"
-		       Date.(single (Jun 8) "16:00-17:00"
-			     :: single (Jun 8) "17:00-18:00"
+		       Date.(single (Jun 8) "17:00-18:00"
 			     :: single (Jun 9) "12:00-13:00"
+			     :: single (Jun 10) "10:00-11:00"
 			     :: set (Every_ Mon)
 				    ~from:(May 22, 2017)
 				    ~till:(Jun 19, 2017)
@@ -189,7 +189,8 @@ let t =
 			     :: set (Every_ Sat)
 				     ~from: (May 20, 2017)
 				     ~till: (Jun 17, 2017)
-				     ~except:[May 27, 2017] "13:30-15:30");
+				     ~except:[May 27, 2017;
+					     Jun 10, 2017] "13:30-15:30");
 		    cp "Coutiches"
 		       Date.(single (May 26) "11:15-12:45"
 			     :: set (Every_ Sat)
