@@ -165,14 +165,14 @@ let t =
 		    mk_fresnes ~jun 9 8 3 1;
 		    mk_fresnes ~jun 9 9 6 2;
 		    mk_fresnes ~jun 9 10 6 1;
-
+		    mk_fresnes ~jun 13 11 3 0 ~c:125;
 		    cp "Nomain"
 		       Date.(single (Jun 8) "17:00-18:00"
 			     :: single (Jun 9) "12:00-13:00"
 			     :: single (Jun 10) "10:00-11:00"
 			     :: set (Every_ Mon)
 				    ~from:(May 22, 2017)
-				    ~till:(Jun 19, 2017)
+				    ~till:(Jun 5, 2017)
 				    ~except:[Jun 5, 2017] "18:00-19:00");
 		    cag "Valenciennes" [];
 		    cp "Fresnes-sur-Escaut"
