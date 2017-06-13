@@ -165,37 +165,48 @@ let t =
 		    mk_fresnes ~jun 9 8 3 1;
 		    mk_fresnes ~jun 9 9 6 2;
 		    mk_fresnes ~jun 9 10 6 1;
+		    mk_fresnes ~jun 12 9 6 1;
+		    mk_fresnes ~jun 12 11 6 2;
+		    mk_fresnes ~jun 12 13 3 3 ~c:218;
+		    mk_fresnes ~jun 12 14 3 1;
+		    mk_fresnes ~jun 12 15 6 2;
+		    mk_fresnes ~jun 13 10 5 3 ~c:118;
 		    mk_fresnes ~jun 13 11 3 0 ~c:125;
+		    mk_fresnes ~jun 14 9 5 1 ~c:118;
+		    mk_fresnes ~jun 14 10 3 1;
+		    mk_fresnes ~jun 14 11 6 1;
+		    (*mk_fresnes ~jun 15 10 6 1;
+		    mk_fresnes ~jun 15 11 6 2;
+		    mk_fresnes ~jun 16 8 3 1;
+		    mk_fresnes ~jun 16 9 6 2;
+		    mk_fresnes ~jun 16 10 6 1;*)
+		    mk_fresnes ~jun 19 8 6 1;
+		    mk_fresnes ~jun 19 10 6 2;
+		    mk_fresnes ~jun 19 11 6 2;
+		    mk_fresnes ~jun 19 13 3 3 ~c:218;
+		    mk_fresnes ~jun 19 14 3 1;
+		  (*  mk_fresnes ~jun 20 10 6 2;
+		    mk_fresnes ~jun 20 11 5 2 ~c:118;
+		    mk_fresnes ~jun 21 10 3 1;
+		    mk_fresnes ~jun 21 11 6 1;
+		    mk_fresnes ~jun 22 10 6 1;
+		    mk_fresnes ~jun 22 11 6 2;
+		    mk_fresnes ~jun 23 8 3 1;
+		    mk_fresnes ~jun 23 9 6 2;
+		    mk_fresnes ~jun 23 10 6 1;*)
 		    cp "Nomain"
-		       Date.(single (Jun 8) "17:00-18:00"
-			     :: single (Jun 9) "12:00-13:00"
-			     :: single (Jun 10) "10:00-11:00"
-			     :: set (Every_ Mon)
-				    ~from:(May 22, 2017)
-				    ~till:(Jun 5, 2017)
-				    ~except:[Jun 5, 2017] "18:00-19:00");
+		       Date.([single (Jun 13) "08:00-09:00"]);
 		    cag "Valenciennes" [];
 		    cp "Fresnes-sur-Escaut"
-		       Date.(set (Every_ Sat)
-				 ~from:(May 20, 2017)
-				 ~till:(Jun 3, 2017) "08:30-10:30");
+		       Date.([]);
 		    cp "Faumont"
-		       Date.(set (Every_ Sat)
-				 ~from: (May 20, 2017)
-				 ~till: (May 27, 2017) "11:15-13:15");
+		       Date.([]);
 		    cp "Flines-lez-Râches"
-		       Date.(single (May 26) "09:00-11:00"
-			     :: single (Jun 6) "14:00-16:00"
-			     :: set (Every_ Sat)
-				     ~from: (May 20, 2017)
-				     ~till: (Jun 17, 2017)
-				     ~except:[May 27, 2017;
-					     Jun 10, 2017] "13:30-15:30");
+		       Date.([ single (Jun 17) "13:30-15:30"]
+			     );
 		    cp "Coutiches"
-		       Date.(single (May 26) "11:15-12:45"
-			     :: set (Every_ Sat)
-				   ~from: (Jun 3, 2017)
-				   ~till: (Jun 17, 2017) "11:15-12:45");
+		       Date.([single (Jun 17) "11:15-12:45"]
+			    );
 		    cp "Saméon"
 		       Date.([]);
 		    cp "Nivelle"
