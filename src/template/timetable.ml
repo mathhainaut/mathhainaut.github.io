@@ -195,18 +195,16 @@ let t =
 		    mk_fresnes ~jun 23 9 6 2;
 		    mk_fresnes ~jun 23 10 6 1;*)
 		    cp "Nomain"
-		       Date.([single (Jun 13) "08:00-09:00"]);
+		       Date.( []);
 		    cag "Valenciennes" [];
 		    cp "Fresnes-sur-Escaut"
 		       Date.([]);
 		    cp "Faumont"
 		       Date.([]);
 		    cp "Flines-lez-Râches"
-		       Date.([ single (Jun 17) "13:30-15:30"]
-			     );
+		       Date.([]);
 		    cp "Coutiches"
-		       Date.([single (Jun 17) "11:15-12:45"]
-			    );
+		       Date.([] );
 		    cp "Saméon"
 		       Date.([]);
 		    cp "Nivelle"
