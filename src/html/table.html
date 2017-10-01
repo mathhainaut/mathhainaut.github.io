@@ -5,13 +5,6 @@
  	   <title>Disponibilités</title>
   </head>
   <body>
-      <p>Dernière mise à jour au ${date_of_update}.</p>
-      <div ml:content="graph graph_current"/>
-
-      <div ml:content="graph graph_coming"/>
-      <p>Prochaines contraintes:</p>
-      <div ml:content="timetable coming"/>
-      
 <script type="text/javascript">
 var current_date = Date.now()
 
@@ -33,12 +26,30 @@ else
 which.style.display="block"
 }
 </script>
+      <p>Dernière mise à jour au ${date_of_update}.</p>
+      <p><a href="javascript:toggle(document.getElementById('graph_1'))">
+        Semaine en cours</a> -
+      <a href="javascript:toggle(document.getElementById('graph_2'))">
+        Semaine suivante</a> -
+      <a href="javascript:toggle(document.getElementById('graph_3'))">
+        Semaine "en 8"</a></p>
+
+      <div id="graph_1" style="display:block" ml:content="graph graph_current"/>
+
+      <div id="graph_2" style="display:block" ml:content="graph graph_coming"/>
+
+      <div id="graph_3" style="display:none" ml:content="graph graph_next"/>
+      <p>Prochaines contraintes (sous forme de liste):</p>
+      <a href="javascript:toggle(document.getElementById('div_coming'))">
+        À venir</a> -
+      <div id="div_coming" style="display:none" ml:content="timetable coming"/>
+
       <a href="javascript:toggle(document.getElementById('div_next'))">
         Et plus tard</a> - 
       <div id="div_next" style="display:none" ml:content="timetable next"/>
       
       <a href="javascript:toggle(document.getElementById('div_done'))">
-        Cours à enregistrer</a>
+        Cours passés (à enregistrer)</a>
      <div id="div_done" style="display:none" ml:content="timetable done"/>
 
   </body>

@@ -20,6 +20,7 @@ let gather_data s dateref =
     | ["coming"] -> (fun d -> (d >= 0 && d <= 14))
     | ["graph_current"] -> (fun d -> (d >= 0 && d < 7))
     | ["graph_coming"] -> (fun d -> (d >= 7 && d < 14))
+    | ["graph_next"] -> (fun d -> (d >= 14 && d < 21))
     | _ -> invalid_arg "Html_timetable.gather_data"
   in
   let filterer (x,_) = cmp (Date.diff_days dateref x) in
@@ -203,7 +204,8 @@ let graph _ s =
     Date.(let last_mon = prev ~d:Mon (today ()) in
 	  let dateref = match s with
 	    | ["graph_current"] -> last_mon
-	    | ["graph_coming"] -> next ~d:Mon (next last_mon)
+	    | ["graph_coming"] -> next_week last_mon
+	    | ["graph_next"] -> next_week (next_week last_mon)
 	    | _ -> invalid_arg "Html_timetable.graph"
 	  in "Semaine du "^(format_t dateref))
   in
