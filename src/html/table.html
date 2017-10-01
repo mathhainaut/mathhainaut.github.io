@@ -5,7 +5,11 @@
  	   <title>Disponibilités</title>
   </head>
   <body>
-      <p>Dernière mise à jour au ${date_of_update} - prochaines contraintes:</p>
+      <p>Dernière mise à jour au ${date_of_update}.</p>
+      <div ml:content="graph graph_current"/>
+
+      <div ml:content="graph graph_coming"/>
+      <p>Prochaines contraintes:</p>
       <div ml:content="timetable coming"/>
       
 <script type="text/javascript">

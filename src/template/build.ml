@@ -51,72 +51,6 @@ let spec = [
    " stop the build if an error is encountered");
 ]
 
-let timetable _ s =
-  let cmp, hide =
-    match s with (* Beware on reading! *)
-      ["done"] -> (fun d ->  d <= 0), false
-    | ["next"] -> (fun d ->  d > 14), true
-    | ["coming"] -> (fun d -> (d >= 0 && d <= 14)), false
-    | _ -> invalid_arg "timetable"
-  in
-  let today = Date.today ()
-  and now = Date.now ()
-  in
-  let filterer (x,_) = cmp (Date.diff_days today x)
-  in
-  let all_html =
-    List.fold_left
-      (fun html (date, events) ->
-         let html_date =
-           let line = Date.(Printf.sprintf "%a %s" (fun () -> function
-                                                      Mon -> "Lundi"
-                                                    | Tue -> "Mardi"
-                                                    | Wed -> "Mercredi"
-                                                    | Thu -> "Jeudi"
-                                                    | Fri -> "Vendredi"
-                                                    | Sat -> "Samedi"
-                                                    | Sun -> "Dimanche")
-                              (weekday date) (format_t date))
-           in
-           Nethtml.Data line
-         in
-         let html_events =
-           List.fold_left
-             (fun html2 (p,w,l) ->
-                let line =
-                  Printf.sprintf "%s-%s : %s, %s"
-                    (Date.format_s (fst p)) (Date.format_s (snd p))
-                    w l
-                in
-                let data =
-                  [Nethtml.Data
-                     (Netconversion.convert
-                        ~in_enc:(
-                          Netconversion.encoding_of_string  "iso-8859-1")
-                        ~out_enc:(
-                          Netconversion.encoding_of_string  "utf8")
-                        line
-                     )]
-                in
-                Nethtml.Element("li",[], data)::html2)
-             [] events
-         in
-         let li_args =
-           [html_date;
-            Nethtml.Element("ul",[],html_events)]
-         in
-         let li = [Nethtml.Element("li",[],li_args)] in
-         let span_args =
-           [
-            "style","javascript:setDisp("^(Date.format_t ~sep:"-" date)^")"
-           ]
-         in
-         Nethtml.Element("span",span_args, li) :: html)
-      [] (List.filter filterer Timetable.t)
-  in
-  [Nethtml.Element("ul",[],all_html)]
-
-
 let () =
   eprintf "Starting generation\n%!";
   Arg.parse (Arg.align spec) (fun _ -> raise(Arg.Bad "no anonymous arguments"))
@@ -128,7 +62,8 @@ let () =
       B.on_error b (fun v a e -> raise e);
     B.string b "map" Settings.map;
     B.string b "map_options" Settings.map_options;
-    B.fun_html b "timetable" timetable;
+    B.fun_html b "timetable" Html_timetable.timetable;
+    B.fun_html b "graph" Html_timetable.graph;
     B.string b "date_of_update" (Date.format_t (Date.today()));
   end;
   let langs = [Settings.main_lang] in

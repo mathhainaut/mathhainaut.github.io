@@ -269,11 +269,11 @@ let t =
 				  (Sep 16, 2017)
 				  (Jun 15, 2018) "09:00-11:00");
 		     cp "Flines-lez-Râches"
-			Date.(single (Oct 5) "13:30-15:00"
+			Date.(single (Oct 7) "13:30-15:00"
 			      :: set (Every_ Fri)
 				  ~from:(Sep 29, 2017)
 				  ~till:(Jun 15, 2018)
-				  ~except:[Oct 4, 2017] "17:30-19:00");
+				  ~except:[Oct 6, 2017] "17:30-19:00");
 		     cp "Aix-lez-Orchies"
 			Date.(single (Sep 18) "18:30-20:00"
 			      :: single (Sep 23) "11:30-13:00"
