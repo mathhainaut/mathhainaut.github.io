@@ -113,7 +113,7 @@ let list_merge lists =
   make line "Fresnes-sur-Escaut" Date.([single (if jun then Jun d else May d) time]) *)
 
 let periods =
-  Date.([(Sep 1, 2017), (Oct 20, 2017);
+  Date.([(Sep 8, 2017), (Oct 20, 2017);
    (Nov 6, 2017), (Dec 22, 2017);
    (Jan 8, 2018), (Feb 19, 2018);
    (Mar 5, 2018), (Apr 20, 2018);
@@ -266,17 +266,34 @@ let t =
 		     
 		     cp "Fresnes-sur-Escaut"
 			Date.(set (Every_ Sat)
-				  (Aug 28, 2017)
+				  (Sep 16, 2017)
 				  (Jun 15, 2018) "09:00-11:00");
 		     cp "Flines-lez-Râches"
-			Date.(set (Every_ Fri)
-				  (Sep 29, 2017)
-				  (Jun 15, 2018) "17:30-19:30");
+			Date.(single (Oct 5) "13:30-15:00"
+			      :: set (Every_ Fri)
+				  ~from:(Sep 29, 2017)
+				  ~till:(Jun 15, 2018)
+				  ~except:[Oct 4, 2017] "17:30-19:00");
+		     cp "Aix-lez-Orchies"
+			Date.(single (Sep 18) "18:30-20:00"
+			      :: single (Sep 23) "11:30-13:00"
+			      :: set (Every_ Tue)
+				     (Oct 1, 2017)
+				     (Jun 15, 2018) "17:30-19:00");
+		     
 		     labbe "2 6" Date.([Mon, 15; Tue, 10; Fri, 11]);
 		     labbe "1 STMG1" Date.([Mon, 14; Tue, 9; Fri, 10]);
 		     labbe "2 6 - 2" Date.([Mon, 8]);
 		     labbe "2 6 - 1" Date.([Mon, 9]);
 
+		     make "Réunion" "Douai"
+			  Date.(set (Every_ Mon)
+				    (Sep 18, 2017)
+				    (Jun 1, 2018) "16:00-18:00"
+				@ set (Every_ Tue)
+				      ~from:(Sep 19, 2017)
+				      ~till:(Jun 2, 2018)
+				      ~except:[Sep 26, 2017] "13:00-15:00");
 		     form "LV"
 			  Date.(set Every_2weeks
 				    (Sep 13, 2017)
@@ -314,7 +331,7 @@ let t =
 		     form "SitPro"
 			   (List.map (fun d -> single d "13:30-16:00")
 				    Date.([Sep 6;
-					   Oct 11;
+					   Oct 18;
 					   Nov 15;
 					   Dec 13]));
 		   ]
