@@ -21,17 +21,27 @@ function toggle(which){
 if (!document.getElementById)
 return
 if (which.style.display=="block")
-which.style.display="none"
+{which.style.display="none";}
 else
-which.style.display="block"
+{which.style.display="block";}
+}
+
+function toggle_underline(which)
+{
+if (!document.getElementById)
+return
+if (which.style.textDecoration=="underline")
+which.style.textDecoration="none";
+else
+which.style.textDecoration="underline";
 }
 </script>
       <p>Dernière mise à jour au ${date_of_update}.</p>
-      <p><a href="javascript:toggle(document.getElementById('graph_1'))">
+      <p><a id="link_g1" href="javascript:toggle(document.getElementById('graph_1'));toggle_underline(link_g1)" style="text-decoration:underline">
         Semaine en cours</a> -
-      <a href="javascript:toggle(document.getElementById('graph_2'))">
+      <a id="link_g2" href="javascript:toggle(document.getElementById('graph_2'));toggle_underline(link_g2)" style="text-decoration:underline">
         Semaine suivante</a> -
-      <a href="javascript:toggle(document.getElementById('graph_3'))">
+      <a id="link_g3" href="javascript:toggle(document.getElementById('graph_3'));toggle_underline(link_g3)">
         Semaine "en 8"</a></p>
 
       <div id="graph_1" style="display:block" ml:content="graph graph_current"/>
@@ -40,16 +50,17 @@ which.style.display="block"
 
       <div id="graph_3" style="display:none" ml:content="graph graph_next"/>
       <p>Prochaines contraintes (sous forme de liste):</p>
+      <a href="javascript:toggle(document.getElementById('div_regist'))">
+        Cours à enregistrer</a> - 
+     <div id="div_regist" style="display:block" ml:content="timetable to_register"/>
       <a href="javascript:toggle(document.getElementById('div_coming'))">
         À venir</a> -
       <div id="div_coming" style="display:none" ml:content="timetable coming"/>
-
       <a href="javascript:toggle(document.getElementById('div_next'))">
         Et plus tard</a> - 
-      <div id="div_next" style="display:none" ml:content="timetable next"/>
-      
+      <div id="div_next" style="display:none" ml:content="timetable next"/>     
       <a href="javascript:toggle(document.getElementById('div_done'))">
-        Cours passés (à enregistrer)</a>
+        Cours passés</a>
      <div id="div_done" style="display:none" ml:content="timetable done"/>
 
   </body>

@@ -206,7 +206,8 @@ let to_day = function
 
 let reference_date = {day=1; month = 1; year = 2012}
 
-let weekday date = to_day ((diff_days reference_date date) mod 7)
+let weekday_num date = (diff_days reference_date date) mod 7
+let weekday date = to_day (weekday_num date)
 
 let num_is_weekend n = n = 0 || n = 6
 
