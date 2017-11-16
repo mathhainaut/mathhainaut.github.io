@@ -307,24 +307,52 @@ let t =
 		    mk_fresnes ~jun 23 8 3 1;
 		    mk_fresnes ~jun 23 9 6 2;
 		    mk_fresnes ~jun 23 10 6 1;* ) *)
-      cag "Valenciennes" [];
+      cag "Valenciennes" Date.([single (Oct 24) "16:00-18:00"]);
       
-      cp "Fresnes-sur-Escaut" ~last_registered:(Sep 30, 2017)
-	 Date.(set (Every_ Sat)
-		   (Aug 28, 2017)
-		   (Jun 15, 2018) "09:00-11:00");
-      cp "Flines-lez-Râches" ~last_registered:(Sep 1, 2017)
+      cp "Fresnes-S" ~last_registered:(Nov 11, 2017)
+	 Date.(single (Nov 25) "13:00-15:00"
+	       :: set (Every_ Sat)
+		   ~from:(Aug 28, 2017)
+		   ~till:(Jun 15, 2018)
+		   ~except:[Oct 14, 2017;
+			    Nov 11, 2017;
+			    Nov 18, 2017;
+			    Nov 25, 2017] "09:00-11:00");
+     cp "Fresnes-STL" ~last_registered:(Nov 11, 2017)
+	Date.(single (Nov 25) "15:00-17:00"
+	      :: set (Every_ Sat)
+		   ~from:(Dec 2, 2017)
+		   ~till:(Jun 15, 2018)
+		   ~except:[] "11:00-12:30");
+     cp "Saméon" ~last_registered:(Nov 12,2017)
+	Date.(set (Every_ Wed)
+		  ~from:(Nov 16, 2017)
+		  ~till:(Jun 12, 2018)
+		  "17:15-18:45");
+      cp "Flines-lez-Râches" ~last_registered:(Oct 31, 2017)
 	 Date.(single (Oct 7) "13:30-15:00"
+	       :: single (Oct 24) "13:30-15:00"
 	       :: set (Every_ Fri)
 		      ~from:(Sep 29, 2017)
 		      ~till:(Jun 15, 2018)
-		      ~except:[Oct 6, 2017] "17:30-19:00");
-      cp "Aix-lez-Orchies"~last_registered:(Sep 1, 2017)
+		      ~except:[Oct 6, 2017;
+			       Oct 27, 2017;
+			       Nov 3, 2017;
+			       Nov 10, 2017;
+			       Nov 17, 2017] "17:30-19:00");
+      cp "Aix-lez-Orchies"~last_registered:(Nov 7, 2017)
 	 Date.(single (Sep 18) "18:30-20:00"
 	       :: single (Sep 23) "11:30-13:00"
+	       :: single (Oct 24) "09:00-10:30"
 	       :: set (Every_ Tue)
-		      (Oct 1, 2017)
-		      (Jun 15, 2018) "17:30-19:00");
+		      ~from:(Oct 1, 2017)
+		      ~till:(Jun 15, 2018)
+		      ~except:[Oct 24, 2017;
+			       Oct 31, 2017;
+			       Nov 14, 2017] "17:30-19:00");
+      cp "Saint-Amand" ~last_registered:(Nov 8, 2017)
+	 Date.(List.map (fun x -> single x "13:15-14:15")
+			[Nov 8; Nov 22]);
       
       labbe "2 6" Date.([Mon, 15; Tue, 10; Fri, 11]);
       labbe "1 STMG1" Date.([Mon, 14; Tue, 9; Fri, 10]);
@@ -344,8 +372,13 @@ let t =
 	    || d = make (Sep 19, 2017)
 	  in 
 	  labbe_0 Tue ~filter "14:00-15:00"
+	and reun_fri =
+	  let ref_date = make (Oct 13, 2017) in
+	  let filter (d,_) = diff_days ref_date d >= 0 in 
+	  labbe_0 Fri ~filter "15:00-16:00"
 	in single (Oct 6) "15:00-16:00"
-	   :: (reun_mon @ reun_tue)
+	   :: single (Nov 18) "08:30-12:00"
+	   :: (reun_mon @ reun_tue @ reun_fri)
       );
       
       form "LV"
@@ -356,8 +389,8 @@ let t =
 	   Date.([single (Sep 20) "13:30-14:30";
 		  single (Nov 29) "13:30-15:30"]);
       form "HisMaths"
-	   Date.(single (Nov 8) "10:00-12:00"
-		 :: single (Nov 15) "10:00-12:00"
+	   Date.(single (Nov 8) "09:00-11:00"
+		 :: single (Nov 22) "10:00-12:00"
 		 :: set Every_2weeks
 			~from: (Sep 20, 2017)
 			~till: (Nov 29, 2017)
