@@ -312,23 +312,24 @@ let t =
       cp "Fresnes-S" ~last_registered:(Nov 11, 2017)
 	 Date.(single (Nov 25) "13:00-15:00"
 	       :: set (Every_ Sat)
-		   ~from:(Aug 28, 2017)
-		   ~till:(Jun 15, 2018)
-		   ~except:[Oct 14, 2017;
-			    Nov 11, 2017;
-			    Nov 18, 2017;
-			    Nov 25, 2017] "09:00-11:00");
-     cp "Fresnes-STL" ~last_registered:(Nov 11, 2017)
-	Date.(single (Nov 25) "15:00-17:00"
-	      :: set (Every_ Sat)
-		   ~from:(Dec 2, 2017)
-		   ~till:(Jun 15, 2018)
-		   ~except:[] "11:00-12:30");
-     cp "Saméon" ~last_registered:(Nov 12,2017)
-	Date.(set (Every_ Wed)
-		  ~from:(Nov 16, 2017)
-		  ~till:(Jun 12, 2018)
-		  "17:15-18:45");
+		      ~from:(Aug 28, 2017)
+		      ~till:(Jun 15, 2018)
+		      ~except:[Oct 14, 2017;
+			       Nov 11, 2017;
+			       Nov 18, 2017;
+			       Nov 25, 2017] "09:00-11:00");
+      cp "Fresnes-STL" ~last_registered:(Nov 11, 2017)
+	 Date.(single (Nov 25) "15:00-17:00"
+	       :: set (Every_ Sat)
+		      ~from:(Dec 2, 2017)
+		      ~till:(Jun 15, 2018)
+		      ~except:[] "11:00-12:30");
+      cp "Saméon" ~last_registered:(Nov 12,2017)
+	 Date.(set (Every_ Wed)
+		   ~from:(Nov 16, 2017)
+		   ~till:(Jun 12, 2018)
+		   ~except:[Dec 6, 2017]
+		   "17:15-18:45");
       cp "Flines-lez-Râches" ~last_registered:(Oct 31, 2017)
 	 Date.(single (Oct 7) "13:30-15:00"
 	       :: single (Oct 24) "13:30-15:00"
@@ -363,7 +364,9 @@ let t =
 	   Date.(
 	let reun_mon =
 	  let ref_date = make (Sep 18, 2017) in
-	  let filter (d,_) = diff_days ref_date d >= 0 in 
+	  let filter (d,_) =
+	    diff_days ref_date d >= 0
+	    && d <> make (Dec 4, 2017)in 
 	  labbe_0 Mon ~filter "16:55-18:00"
 	and reun_tue =
 	  let ref_date = make (Oct 10, 2017) in
@@ -421,5 +424,7 @@ let t =
 			    Oct 18;
 			    Nov 15;
 			    Dec 13]));
-      make "Non dispo" "" Date.([single (Sep 26) "12:00-22:00"])
+      make "Non dispo" "" Date.([single (Sep 26) "12:00-22:00"]);
+      make "CC" "Douai" Date.([single (Nov 30) "16:55-18:15";
+			       single (Dec 6) "16:00-17:30"])
     ]
