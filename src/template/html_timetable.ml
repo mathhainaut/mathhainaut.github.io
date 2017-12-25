@@ -225,11 +225,11 @@ let graph _ s =
 	  in list)
   in
   let text_date =
-    Date.(let last_mon = prev ~d:Mon (today ()) in
+    Date.(let this_monday = prev ~d:Mon (next (today ())) in
 	  let dateref = match s with
-	    | ["graph_current"] -> last_mon
-	    | ["graph_coming"] -> next_week last_mon
-	    | ["graph_next"] -> next_week (next_week last_mon)
+	    | ["graph_current"] -> this_monday
+	    | ["graph_coming"] -> next_week this_monday
+	    | ["graph_next"] -> next_week (next_week this_monday)
 	    | _ -> invalid_arg "Html_timetable.graph"
 	  in "Semaine du "^(format_t dateref))
   in
