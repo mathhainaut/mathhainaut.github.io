@@ -74,9 +74,9 @@ let make0 ewhat ?(eprecision="") ewhere ?last_registered ewhen =
 let cp = make0 "CP"
 let st = make0 "Stage"
 
-let make = make0 ?last_registered:None
+let event = make0 ?last_registered:None
 
-let cag = make "C Ag"
+let cag = event "C Ag"
 
 type event =
     {from: Date.s;
@@ -173,6 +173,10 @@ let periods =
    (Mar 5, 2018), (Apr 20, 2018);
    (May 7, 2018), (Jul 6, 2018)])
 
+let days_off =
+  List.map (fun d -> Date.make (d,ref_year+1))
+	   Date.([Apr 2; May 8; May 10; May 21])
+	 
 let labbe_time =  function
     8, Start -> "08:05"
   | 8, End
@@ -201,7 +205,7 @@ let labbe_0 d ?(filter=fun _ -> true) time =
     List.rev_append (Date.(set (Every_ d) ~from ~till time)) l
   in
   let full = List.fold_left merger [] periods
-  in List.filter filter full
+  in List.filter (fun dp -> filter dp && not (List.mem (fst dp) days_off)) full
 
 let labbe_1 d filter h =
   let time =
@@ -216,17 +220,17 @@ let labbe classe ?(filter=fun _ -> true) list =
        let list = labbe_1 d filter h in
        aux (List.rev_append list res) l
   in
-  make "Cours" ~eprecision:classe "Douai" (aux [] list)
+  event "Cours" ~eprecision:classe "Douai" (aux [] list)
    
 let form ue dates =
-  make "Formation" ~eprecision:ue "Valenciennes" dates
+  event "Formation" ~eprecision:ue "Valenciennes" dates
 
 (*let jun = true*)
 	     
 let t =
   split_elements
-    [
-      (*(make "Non dispo" "Fresnes-sur-Escaut"
+    Date.([
+	   (*(make "Non dispo" "Fresnes-sur-Escaut"
 			 Date.([single (May 9) "08:30-11:00"]);
 		    mk_fresnes 9 11 ~c:118 5 1;
 		    mk_fresnes 10 10 3 1;
@@ -313,10 +317,10 @@ let t =
 		    mk_fresnes ~jun 23 8 3 1;
 		    mk_fresnes ~jun 23 9 6 2;
 		    mk_fresnes ~jun 23 10 6 1;* ) *)
-      cag "Valenciennes" Date.([single (Oct 24) "16:00-18:00"]);
-      
-      cp "Fresnes-S" ~last_registered:(Dec 25, 2017)
-	 Date.(single (Nov 25) "13:00-15:00"
+	   cag "Valenciennes" [single (Oct 24) "16:00-18:00"];
+	   
+	   cp "Fresnes-S" ~last_registered:(Dec 25, 2017)
+	      (single (Nov 25) "13:00-15:00"
 	       :: single (Dec 28) "14:00-16:00"
 	       :: single (Jan 4) "14:00-16:00"
 	       :: set (Every_ Sat)
@@ -328,8 +332,9 @@ let t =
 			       Nov 25, 2017;
 			       Dec 30, 2017;
 			       Jan 6, 2018] "09:00-11:00");
-      cp "Fresnes-STL" ~last_registered:(Dec 25, 2017)
-	 Date.(single (Nov 25) "15:00-17:00"
+
+	   cp "Fresnes-STL" ~last_registered:(Dec 25, 2017)
+	      (single (Nov 25) "15:00-17:00"
 	       :: single (Dec 28) "16:00-18:00"
 	       :: single (Jan 4) "16:00-18:00"
 	       :: set (Every_ Sat)
@@ -337,19 +342,23 @@ let t =
 		      ~till:(Jun 15, 2018)
 		      ~except:[Dec 30, 2017;
 			       Jan 6, 2018] "11:00-12:30");
-      cp "Saméon" ~last_registered:(Dec 25 ,2017)
-	 Date.(single (Dec 29) "10:30-12:00"
-	       :: set (Every_ Wed)
-		   ~from:(Nov 16, 2017)
-		   ~till:(Jun 12, 2018)
-		   ~except:[Dec 6, 2017;
-			    Dec 13, 2017;
-			    Dec 20, 2017;
-			    Dec 27, 2017;
-			    Jan 3, 2018]
-		   "17:15-18:45");
-      cp "Flines-lez-Râches" ~last_registered:(Dec 25, 2017)
-	 Date.(single (Oct 7) "13:30-15:00"
+
+	   cp "Saméon" ~last_registered:(Dec 25 ,2017)
+	      (List.append
+		 (List.map (fun d -> single d "10:30-12:00")
+			   [Dec 29; Jan 2])
+		 (set (Every_ Wed)
+		      ~from:(Nov 16, 2017)
+		      ~till:(Jun 12, 2018)
+		      ~except:[Dec 6, 2017;
+			       Dec 13, 2017;
+			       Dec 20, 2017;
+			       Dec 27, 2017;
+			       Jan 3, 2018]
+		      "17:15-18:45"));
+
+	   cp "Flines-lez-Râches" ~last_registered:(Dec 25, 2017)
+	      (single (Oct 7) "13:30-15:00"
 	       :: single (Oct 24) "13:30-15:00"
 	       :: set (Every_ Fri)
 		      ~from:(Sep 29, 2017)
@@ -361,8 +370,9 @@ let t =
 			       Nov 17, 2017;
 			       Dec 29, 2017;
 			       Jan 5, 2018] "17:30-19:00");
-      cp "Aix-lez-Orchies"~last_registered:(Dec 25, 2017)
-	 Date.(single (Sep 18) "18:30-20:00"
+
+	   cp "Aix-lez-Orchies" ~last_registered:(Dec 25, 2017)
+	      (single (Sep 18) "18:30-20:00"
 	       :: single (Sep 23) "11:30-13:00"
 	       :: single (Oct 24) "09:00-10:30"
 	       :: set (Every_ Tue)
@@ -374,52 +384,58 @@ let t =
 			       Dec 19, 2017;
 			       Dec 26, 2017;
 			       Jan 2, 2018] "17:30-19:00");
-      cp "Saint-Amand" ~last_registered:(Dec 25, 2017)
-	 Date.(List.map (fun x -> single x "13:15-14:15")
-			[Nov 8; Nov 22]);
-      
-      labbe "2 6" Date.([Mon, 15; Tue, 10; Fri, 11]);
-      labbe "1 STMG1" Date.([Mon, 14; Tue, 9; Fri, 10]);
-      labbe "2 6 - 2" Date.([Mon, 8]);
-      labbe "2 6 - 1" Date.([Mon, 9]);
 
-      make "Réunion" "Douai"
-	   Date.(
-	let reun_mon =
-	  let ref_date = make (Sep 18, 2017) in
-	  let filter (d,_) =
-	    diff_days ref_date d >= 0
-	    && d <> make (Dec 4, 2017)in 
-	  labbe_0 Mon ~filter "16:55-18:00"
-	and reun_tue =
-	  let ref_date = make (Oct 10, 2017) in
-	  let filter (d,_) =
-	    diff_days ref_date d >= 0
-	    || d = make (Sep 19, 2017)
-	  in 
-	  labbe_0 Tue ~filter "14:00-15:00"
-	and reun_fri =
-	  let ref_date = make (Oct 13, 2017) in
-	  let filter (d,_) = diff_days ref_date d >= 0 in 
-	  labbe_0 Fri ~filter "15:00-16:00"
-	in single (Oct 6) "15:00-16:00"
-	   :: single (Nov 18) "08:30-12:00"
-	   :: (reun_mon @ reun_tue @ reun_fri)
-      );
-      
-      form "LV"
-	   Date.(List.append
+	   cp "Saint-Amand" ~last_registered:(Dec 25, 2017)
+	      (List.map (fun x -> single x "13:15-14:15")
+			[Nov 8; Nov 22]);
+
+	   cp "Nomain" ~last_registered:(Jan 3, 2018)
+	      (single (Dec 9) "13:15-15:15"
+	       :: single (Dec 16) "13:15-14:15"
+	       :: single (Jan 2) "09:00-10:00"
+	       :: []);
+	   
+	   labbe "2 6" [Mon, 15; Tue, 10; Fri, 11];
+	   labbe "1 STMG1" [Mon, 14; Tue, 9; Fri, 10];
+	   labbe "2 6 - 2" [Mon, 8];
+	   labbe "2 6 - 1" [Mon, 9];
+	   
+	   event "Réunion" "Douai"
+		 (let reun_mon =
+		    let ref_date = make (Sep 18, 2017) in
+		    let filter (d,_) =
+		      diff_days ref_date d >= 0
+		      && d <> make (Dec 4, 2017)in 
+		    labbe_0 Mon ~filter "16:55-18:00"
+		  and reun_tue =
+		    let ref_date = make (Oct 10, 2017) in
+		    let filter (d,_) =
+		      diff_days ref_date d >= 0
+		      || d = make (Sep 19, 2017)
+		    in 
+		    labbe_0 Tue ~filter "14:00-15:00"
+		  and reun_fri =
+		    let ref_date = make (Oct 13, 2017) in
+		    let filter (d,_) = diff_days ref_date d >= 0 in 
+		    labbe_0 Fri ~filter "15:00-16:00"
+		  in single (Oct 6) "15:00-16:00"
+		     :: single (Nov 18) "08:30-12:00"
+		     :: (reun_mon @ reun_tue @ reun_fri)
+		 );
+	   
+	   form "LV"
+		(List.append
 		   (set Every_2weeks
-		     (Sep 13, 2017)
-		     (Oct 11, 2017) "10:00-12:00")
+			(Sep 13, 2017)
+			(Oct 11, 2017) "10:00-12:00")
 		   (List.map (fun d -> single d "09:30-11:30")
 			     [Jan 25;Feb 15; Mar 15]));
-      form "TICE"
-	   Date.([single (Sep 20) "13:30-14:30";
-		  single (Nov 29) "13:30-15:30";
-		  single (Feb 21) "13:30-16:30"]);
-      form "HisMaths"
-	   Date.(List.append
+	   form "TICE"
+		[single (Sep 20) "13:30-14:30";
+		 single (Nov 29) "13:30-15:30";
+		 single (Feb 21) "13:30-16:30"];
+	   form "HisMaths"
+		(List.append
 		   (single (Nov 8) "09:00-11:00"
 		    :: single (Nov 22) "10:00-12:00"
 		    :: set Every_2weeks
@@ -433,8 +449,8 @@ let t =
 			   ~till:(Mar 28, 2018)
 			   ~except:[Feb 28, 2018] "10:00-12:00")
 		);
-      form "Didac"
-	   Date.(List.append
+	   form "Didac"
+		(List.append
 		   (single (Sep 14) "09:00-12:00"
 		    :: single (Oct 5) "09:00-12:00"
 		    :: single (Nov 23) "09:00-12:00"
@@ -445,37 +461,25 @@ let t =
 			   ~till:(Feb 7, 2018) "09:00-12:00")
 		   (List.map (fun d -> single d "09:30-11:30") [Feb 21; Mar 21])
 		);
-      
-      form "Rech"
-	   Date.([single (Sep 13) "13:30-14:00"]);
+	   
+	   form "Rech"
+		[single (Sep 13) "13:30-14:00"];
 
-      form "ContEx"
-	   (List.map (fun d -> single d "09:00-16:00")
-		     Date.([Sep 7;
-			    Sep 21;
-			    Oct 12;
-			    Nov 16;
-			    Nov 30;
-			    Dec 21;
-			    Jan 11;
-			    Feb 22;
-			    Mar 22;
-			    Mar 29;
-			    Apr 19]));
-      make "Formation" "Douai"
-	   (List.map (fun d -> single d "09:00-16:00")
-		     Date.([Jan 18; Feb 1]));
-      form "SitPro"
-	   (List.map (fun d -> single d "13:30-16:00")
-		     Date.([Sep 6;
-			    Oct 18;
-			    Nov 15;
-			    Dec 13;
-			    Jan 17;
-			    Jan 31;
-			    Mar 14;
-			    Mar 28]));
-      make "Non dispo" "" Date.([single (Sep 26) "12:00-22:00"]);
-      make "CC" "Douai" Date.([single (Nov 30) "16:55-18:15";
-			       single (Dec 6) "16:00-17:30"])
-    ]
+	   form "ContEx"
+		(List.map (fun d -> single d "09:00-16:00")
+			  [Sep 7; Sep 21; Oct 12; Nov 16; Nov 30; Dec 21;
+			   Jan 11; Feb 22; Mar 22; Mar 29; Apr 19]);
+	  
+	   event "Formation" "Douai"
+		(List.map (fun d -> single d "09:00-16:00")
+			  [Jan 18; Feb 1]);
+	   form "SitPro"
+		(List.map (fun d -> single d "13:30-16:00")
+			  [Sep 6; Oct 18; Nov 15; Dec 13;
+			   Jan 17; Jan 31; Mar 14; Mar 28]);
+
+	   event "Non dispo" "" Date.([single (Sep 26) "12:00-22:00"]);
+	   event "CC" "Douai" Date.([single (Nov 30) "16:55-18:15";
+				     single (Dec 6) "16:00-17:30"]);
+	   event "Réunion PP" "Douai" [single (Dec 19) "18:00-21:00"]
+	 ])
