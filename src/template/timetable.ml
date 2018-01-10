@@ -277,8 +277,10 @@ let t =
 	   cp "Saméon" ~last_registered:(Dec 25)
 	      [from (Nov 16) ~till:(Jun 12)  (Every_ Wed)
 		    ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
-			     Jan 3]  
+			     Jan 3; Jan 10]  
 	       => (17|:15, 18|:45);
+	       [Jan 10, 18|:00, 19|:00;
+		Jan 13, 13|:15, 13|:45];
 	       [Dec 29; Jan 2; Jan 3; Jan 6]
 	       => (10|:30, 12|:00)
 	      ];
@@ -383,7 +385,7 @@ let t =
 		[[Sep 14; Oct 5; Nov 23]
 		 => (09|:00, 12|:00);
 		 [Dec 7; Dec 13]
-		 => (10|:00 & 12|:00);
+		 => (10|:00, 12|:00);
 		 from (Jan 10) ~till:(Feb 7) Every_2weeks
 		 => (09|:00, 12|:00);
 		 [Feb 21; Mar 21]
