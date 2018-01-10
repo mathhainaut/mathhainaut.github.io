@@ -38,6 +38,9 @@ val format_t : ?sep:string -> t -> string
 val format_ymd : t -> string
 (**yyyymmdd*)
 
+val get : t -> month * int
+(** "Inverse" of make. *)
+			 
 val today : unit -> t
 
 (**{2 Dates and days}*)
@@ -80,17 +83,16 @@ val prev_week: t -> t
 
 (**{2 Hours}
 
-Note: no guards preventing encoding wrong hours.
 *)
 
-type s = { h : int; m : int; }
+type s = private {h:int;m:int}
+val ( |: ) : int -> int -> s
 val incr_hour : ?midnight:bool -> s -> s
 val now : unit -> s
 val now_today : ?m:int -> unit -> s * t
 val format_s : ?sep:string -> s -> string
 val to_s : string -> s
-type period = s * s
-val to_p : string -> period
+
 
 (**{2 Operations on dates and hours}*)
 val add_min : s -> int -> s

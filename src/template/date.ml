@@ -49,6 +49,24 @@ let make (md, y) =
 
 let mk d m y = {day=d;month=m;year=y}
 
+let get date =
+  let n = date.day in
+  let m = match date.month with
+      1 -> Jan n
+    | 2 -> Feb n
+    | 3 -> Mar n
+    | 4 -> Apr n
+    | 5 -> May n
+    | 6 -> Jun n
+    | 7 -> Jul n
+    | 8 -> Aug n
+    | 9 -> Sep n
+    | 10 -> Oct n
+    | 11 -> Nov n
+    | 12 -> Dec n
+    | m0 -> failwith ("Date.get: month="^(string_of_int m0))
+  in m, date.year
+
 let format t = Printf.sprintf "%02d%02d%04d" t.day t.month t.year
 let format_t ?(sep="/") t =
   Printf.sprintf "%02d%s%02d%s%04d" t.day sep t.month sep t.year
@@ -82,6 +100,11 @@ let prev_1 t =
 
 type s = {h:int;m:int}
 
+let ( |: ) h m =
+  if h < 0 || h > 23 then invalid_arg ("|: - h="^(string_of_int h))
+  else if m < 0 || m > 59 then invalid_arg ("|: - m="^(string_of_int m))
+  else {h; m}
+	   
 let incr_hour ?(midnight=true) hour =
   let h' =  hour.h + 1 in
   let h'' = if midnight then h' mod 24 else h' in
@@ -92,11 +115,13 @@ let now () =
   {h=time.Unix.tm_hour; m=time.Unix.tm_min}
 
 let now_today ?m () =
-  let time = Unix.localtime (Unix.time ()) in
-  {h=time.Unix.tm_hour; m=(match m with None -> time.Unix.tm_min | Some m -> m)},
-  {day = time.Unix.tm_mday;
-   month = time.Unix.tm_mon + 1;
-   year = time.Unix.tm_year + 1900}
+  let module U = Unix in
+  let time = U.localtime (U.time ()) in
+  {h=time.U.tm_hour;
+   m=(match m with None -> time.U.tm_min | Some m -> m)},
+  {day = time.U.tm_mday;
+   month = time.U.tm_mon + 1;
+   year = time.U.tm_year + 1900}
 
 let format_s ?(sep=":") s = Printf.sprintf "%02d%s%02d" s.h sep s.m
 
@@ -105,11 +130,11 @@ let to_s s =
   let n1 = String.sub s 0 2 and n2 = String.sub s 3 2 in
   if s.[2] <> ':' then invalid_arg ("to_s:"^s^"-missing ':' separator")
   else
-    try {h = int_of_string n1;
-         m = int_of_string n2}
+    try  int_of_string n1 |: int_of_string n2
     with Invalid_argument msg ->
       invalid_arg ("to_s:"^s^"-"^msg)
 
+(*
 type period = s * s
 
 let to_p s =
@@ -120,7 +145,7 @@ let to_p s =
     try to_s n1, to_s n2
    with Invalid_argument msg ->
      invalid_arg ("to_p:"^s^"-"^msg)
-
+ *)
 
 let add_min s min =
   let h' = s.h + (min / 60) in
@@ -174,8 +199,6 @@ let diff_days d1 d2 =
     let sum = diff1 + full_years + diff2 in
     if inv then - sum else sum
 
-(* Sunday *)
-
 type day =
   | Sun
   | Mon
@@ -204,7 +227,8 @@ let to_day = function
   | 6 -> Sat
   | _ -> invalid_arg "to_day"
 
-let reference_date = {day=1; month = 1; year = 2012}
+(* Sunday *)
+let reference_date = {day=1; month = 1; year = 2017}
 
 let weekday_num date = (diff_days reference_date date) mod 7
 let weekday date = to_day (weekday_num date)
