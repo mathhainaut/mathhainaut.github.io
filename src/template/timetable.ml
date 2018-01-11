@@ -398,7 +398,7 @@ let t =
 
 	   form "ContEx"
 		[[Sep 7; Sep 21; Oct 12; Nov 16; Nov 30; Dec 21;
-		  Jan 11; Feb 22; Mar 22; Mar 29; Apr 19]
+		  Jan 11; Feb 22; Mar 15; Mar 29; Apr 19]
 		 => (09|:00, 16|:00)];
 	   
 	   event "Formation" "Douai"
