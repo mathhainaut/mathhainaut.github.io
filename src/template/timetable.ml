@@ -375,10 +375,11 @@ let t =
 		 List.append
 		    (from (Sep 20) ~till:(Nov 29) Every_2weeks
 			  ~except:[Nov 1; Nov 15])
-		    (from (Jan 17) ~till:(Mar 28) Every_2weeks
+		    (from (Jan 31) ~till:(Mar 28) Every_2weeks
 			  ~except:[Feb 28])
 		 => (10|:00, 12|:00);
-		 [Apr 4, 10|:00, 12|:00];
+		 [Jan 17; Apr 4]
+		 => (10|:00, 12|:00);
 		];
 
 	   form "Didac"
@@ -386,8 +387,8 @@ let t =
 		 => (09|:00, 12|:00);
 		 [Dec 7; Dec 13]
 		 => (10|:00, 12|:00);
-		 from (Jan 10) ~till:(Feb 7) Every_2weeks
-		 => (09|:00, 12|:00);
+		 [Jan 10; Jan 17; Feb 7]
+		 => (09|:00, 11|:30);
 		 [Feb 21; Mar 21]
 		 => (09|:30, 11|:30)
 		];
