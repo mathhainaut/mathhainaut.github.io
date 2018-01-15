@@ -80,53 +80,60 @@ let () =
   in
 
   let webpage_title current =
-    if is_base_file current then
-      [Nethtml.Element("h1",["id","project_title"],
-		       [Nethtml.Element("a",["href","index.html"],
-					[Nethtml.Data("Math Hainaut")])
-		       ])
-      ]
-    else
-       [Nethtml.Element("h1",["id","project_title"],
-		       [Nethtml.Data("UVHC - ESPE")])
-       ]
+    List.assoc (Filename.dirname current)
+	       Settings.(
+      [sourcedir main,
+       Nethtml.([Element("h1",["id","project_title"],
+			 [Element("a",["href","index.html"],
+				  [Data("Math Hainaut")])
+			 ]
+			)]
+	       );
+       sourcedir uvhc,
+       Nethtml.([Element("h1",["id","project_title";
+			       "style","font-color:white"],
+			 [Nethtml.Data("UVHC - ESPE")]
+			)]
+	       );
+       sourcedir labbe, []
+      ])
   in
-  let files_array = Sys.readdir Settings.sources in
+  let files_array = Sys.readdir Settings.(sourcedir main) in
   let files_list = List.filter (fun file ->
-                                Filename.check_suffix file "html"
-                               ) (Array.to_list files_array)
+				Filename.check_suffix file "html"
+			       ) (Array.to_list files_array)
   in
   let nref = ref 10 in
   let make_tuple s =
     let n =
       try
-        List.assoc s Settings.page_order
+	List.assoc s Settings.page_order
       with Not_found ->
-        nref := !nref + 1;
-        !nref
+	nref := !nref + 1;
+	!nref
     in
-    s, (Settings.sources^"/"^s), n
+    n, s, (
+      let full = Settings.(sourcedir main)^"/"^s in
+      let webfile = Weberizer.read full ~bindings:b in
+      Weberizer.title_of webfile)
   in
-  let files_list2 = List.rev_map make_tuple files_list in
-  let pages_titles = List.rev_map
-		       (fun (f, f', n) -> (n, f, Weberizer.title_of ((Weberizer.read f' ~bindings:b)))
-		       ) files_list2
+  let pages_titles = List.rev_map make_tuple files_list
   in
   let pages_titles = List.sort (fun (a,_,_) (b,_,_) -> b - a) pages_titles in
   let create_menu current =
-      let treat_pair list (_, file, title) =
-	let list = if list = [] then []
-		   else ( Nethtml.Data " | ") :: list
-	in
-	let args = [("id",
-                     if title = current then "current_page" else "other_page")]
-	in
-	(make_link file ~args title) :: list
+    let treat_pair list (_, file, title) =
+      let list = if list = [] then []
+		 else ( Nethtml.Data " | ") :: list
       in
-      let h2_args = [("id","other_page")] in
-      let h2_content = List.fold_left treat_pair [] pages_titles
+      let args = [("id",
+		   if title = current then "current_page" else "other_page")]
       in
-      [Nethtml.Element("h2",h2_args, h2_content)]
+      (make_link file ~args title) :: list
+    in
+    let h2_args = [("id","other_page")] in
+    let h2_content = List.fold_left treat_pair [] pages_titles
+    in
+    [Nethtml.Element("h2",h2_args, h2_content)]
   in
 
   let filter _ = true in
@@ -138,7 +145,7 @@ let () =
     in
     Weberizer.Binding.string b "url_base" url_base;
     let full_path = Path.full p in
-    let is_base = is_base_file full_path in
+    let is_main = Filename.dirname full_path = Settings.(sourcedir main) in
     
     let page = Weberizer.read full_path ~bindings:b in
     let title = Weberizer.title_of page in
@@ -153,7 +160,7 @@ let () =
     let tpl = Canvas.webpage_title tpl webpage_title in
     let img_dir = url_base ^ prefix ^ Settings.img_dir in
 
-    let menu = if is_base then create_menu title else [] in
+    let menu = if is_main then create_menu title else [] in
     let tpl = Canvas.menu tpl menu in
 
     let body = Weberizer.body_of page in

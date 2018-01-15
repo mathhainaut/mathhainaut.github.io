@@ -2,6 +2,12 @@ let stylesheet = "stylesheets/stylesheet.css"
 let img_dir = "images/"
 let sources = "src/html"
 
+let main = "web"
+let uvhc = "uvhc-espe"
+let labbe = "labbe"
+
+let sourcedir s = sources^"/"^s
+
 let main_lang = "fr"
 
 let index = "index.html"
