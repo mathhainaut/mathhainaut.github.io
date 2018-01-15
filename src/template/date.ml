@@ -258,11 +258,14 @@ let next_m = fun_opt ~fdef:next_m1 ~frec:next_1
 let prev = fun_opt ~fdef:prev_1 ~frec:prev_1
 let prev_m = fun_opt ~fdef:prev_m1 ~frec:prev_1
 
-let loop7 frec =
+let loop k frec =
   let rec loop date = function
     0 -> date
   | n -> loop (frec date) (n-1)
-  in fun date -> loop date 7
+  in fun date -> loop date k
 
-let next_week = loop7 next
-let prev_week = loop7 prev
+let next_week = loop 7 next
+let prev_week = loop 7 prev
+
+let add_days date k = loop k next date
+let sub_days date k = loop k prev date

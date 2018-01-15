@@ -61,7 +61,24 @@ val weekday_num : t -> int
 val weekend : t -> bool
 (**[true] iff the date is a Saturday or a Sunday.*)
 
-val next : ?d:day -> t -> t
+(**{2 Hours}
+
+*)
+
+type s = private {h:int;m:int}
+val ( |: ) : int -> int -> s
+val incr_hour : ?midnight:bool -> s -> s
+val now : unit -> s
+val now_today : ?m:int -> unit -> s * t
+val format_s : ?sep:string -> s -> string
+val to_s : string -> s
+
+
+(**{2 Operations on dates and hours}*)
+val add_min : s -> int -> s
+val minutes : s -> int
+val diff_min : s -> s -> int
+			   val next : ?d:day -> t -> t
 (** The next [d], starting from the given date. If this is a [d],
 fetches next anyway. *)
 			    
@@ -80,24 +97,7 @@ date.*)
 val next_week: t -> t
 val prev_week: t -> t
 (**Same day of next/previous week.*)
-
-(**{2 Hours}
-
-*)
-
-type s = private {h:int;m:int}
-val ( |: ) : int -> int -> s
-val incr_hour : ?midnight:bool -> s -> s
-val now : unit -> s
-val now_today : ?m:int -> unit -> s * t
-val format_s : ?sep:string -> s -> string
-val to_s : string -> s
-
-
-(**{2 Operations on dates and hours}*)
-val add_min : s -> int -> s
-val minutes : s -> int
-val diff_min : s -> s -> int
 val diff_days : t -> t -> int
 val is_between : d:t -> t -> t -> bool
-
+val add_days : t -> int -> t
+val sub_days : t -> int -> t

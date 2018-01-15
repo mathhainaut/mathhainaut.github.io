@@ -54,7 +54,7 @@ let spec = [
 let () =
   eprintf "Starting generation\n%!";
   Arg.parse (Arg.align spec) (fun _ -> raise(Arg.Bad "no anonymous arguments"))
-    "build <options>";
+	    "build <options>";
   let b =  Weberizer.Binding.make() in
   let module B =  Weberizer.Binding in
   begin
@@ -63,15 +63,37 @@ let () =
     B.string b "map" Settings.map;
     B.string b "map_options" Settings.map_options;
     B.fun_html b "timetable" Html_timetable.timetable;
+    B.fun_html b "form_timetable" Html_formations.timetable;
     B.fun_html b "graph" Html_timetable.graph;
+    B.html b "form_graph" Html_formations.graph;
     B.string b "date_of_update" (Date.format_t (Date.today()));
   end;
   let langs = [Settings.main_lang] in
   let out_dir lang = if lang = Settings.main_lang then "./" else lang in
 
+  let is_base_file file =
+    print_string file;
+    let b = Filename.dirname file = Settings.sources (*List.mem file (List.map fst Settings.page_order*) in
+    print_string (if b then " base" else " not");
+    print_newline ();
+    b
+  in
+
+  let webpage_title current =
+    if is_base_file current then
+      [Nethtml.Element("h1",["id","project_title"],
+		       [Nethtml.Element("a",["href","index.html"],
+					[Nethtml.Data("Math Hainaut")])
+		       ])
+      ]
+    else
+       [Nethtml.Element("h1",["id","project_title"],
+		       [Nethtml.Data("UVHC - ESPE")])
+       ]
+  in
   let files_array = Sys.readdir Settings.sources in
   let files_list = List.filter (fun file ->
-                                  Filename.check_suffix file "html"
+                                Filename.check_suffix file "html"
                                ) (Array.to_list files_array)
   in
   let nref = ref 10 in
@@ -87,24 +109,24 @@ let () =
   in
   let files_list2 = List.rev_map make_tuple files_list in
   let pages_titles = List.rev_map
-    (fun (f, f', n) -> (n, f, Weberizer.title_of ((Weberizer.read f' ~bindings:b)))
-    ) files_list2
+		       (fun (f, f', n) -> (n, f, Weberizer.title_of ((Weberizer.read f' ~bindings:b)))
+		       ) files_list2
   in
   let pages_titles = List.sort (fun (a,_,_) (b,_,_) -> b - a) pages_titles in
   let create_menu current =
-    let treat_pair list (_, file, title) =
-      let list = if list = [] then []
-      else ( Nethtml.Data " | ") :: list
+      let treat_pair list (_, file, title) =
+	let list = if list = [] then []
+		   else ( Nethtml.Data " | ") :: list
+	in
+	let args = [("id",
+                     if title = current then "current_page" else "other_page")]
+	in
+	(make_link file ~args title) :: list
       in
-      let args = [("id",
-                   if title = current then "current_page" else "other_page")]
+      let h2_args = [("id","other_page")] in
+      let h2_content = List.fold_left treat_pair [] pages_titles
       in
-      (make_link file ~args title) :: list
-    in
-    let h2_args = [("id","other_page")] in
-    let h2_content = List.fold_left treat_pair [] pages_titles
-    in
-    [Nethtml.Element("h2",h2_args, h2_content)]
+      [Nethtml.Element("h2",h2_args, h2_content)]
   in
 
   let filter _ = true in
@@ -115,8 +137,10 @@ let () =
       else Path.to_base p
     in
     Weberizer.Binding.string b "url_base" url_base;
-
-    let page = Weberizer.read (Path.full p) ~bindings:b in
+    let full_path = Path.full p in
+    let is_base = is_base_file full_path in
+    
+    let page = Weberizer.read full_path ~bindings:b in
     let title = Weberizer.title_of page in
     let tpl = Canvas.title tpl title in
 
@@ -125,11 +149,11 @@ let () =
     let stylesheet_loc = url_base ^ prefix^ Settings.stylesheet in
     let tpl = Canvas.stylesheet tpl stylesheet_loc in
 
-    let index = url_base ^ Settings.index in
-    let tpl = Canvas.index tpl index in
+    let webpage_title = webpage_title full_path in
+    let tpl = Canvas.webpage_title tpl webpage_title in
     let img_dir = url_base ^ prefix ^ Settings.img_dir in
 
-    let menu = create_menu title in
+    let menu = if is_base then create_menu title else [] in
     let tpl = Canvas.menu tpl menu in
 
     let body = Weberizer.body_of page in
@@ -144,4 +168,4 @@ let () =
     Canvas.render tpl
   in
   Weberizer.iter_html ~filter ~langs Settings.sources ~out_dir process_html
-    ~perm:0o755
+		      ~perm:0o755

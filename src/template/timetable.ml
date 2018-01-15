@@ -245,177 +245,194 @@ let labbe classe ?(filter=fun _ -> true) list =
 let form ue dates =
   event "Formation" ~eprecision:ue "Valenciennes" dates
 	     
-let t =
-  split_elements
-    Date.([
-	   cag "Valenciennes"  [[Oct 24, 16|:00, 18|:00]];
-	   
-	   cp "Fresnes-S" ~last_registered:(Dec 25)
-	      [from (Aug 28) ~till:(Nov 4) (Every_ Sat)
-		    ~except:[Oct 14; Nov 11; Nov 18; Nov 25]
-	       (* Intentionally further than till date, in
+let cours =
+  Date.( split_elements
+	   [
+	     cag "Valenciennes"  [[Oct 24, 16|:00, 18|:00]];
+	     
+	     cp "Fresnes-S" ~last_registered:(Dec 25)
+		[from (Aug 28) ~till:(Nov 4) (Every_ Sat)
+		      ~except:[Oct 14; Nov 11; Nov 18; Nov 25]
+		 (* Intentionally further than till date, in
 		      order to count removed lessons *)
-	       => (09|:00, 11|:00);
-	       from (Dec 2) ~till:(Jun 15)
-		    ~except:[Dec 30; Jan 6; Jan 13]
-		    (Every_ Sat)
-	       => (08|:30, 10|:30);
-	       [Nov 25, 13|:00, 15|:00];
-	       [Dec 28; Jan 4]
-	       => (14|:00, 16|:00)
-	      ];
+		 => (09|:00, 11|:00);
+		 from (Dec 2) ~till:(Jun 15) (Every_ Sat)
+		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Feb 3]
+		 => (08|:30, 10|:30);
+		 [Nov 25, 13|:00, 15|:00];
+		 [Jan 20, 09|:00, 11|:00];
+		 [Dec 28; Jan 4]
+		 => (14|:00, 16|:00)
+		];
 
-	   cp "Fresnes-STL" ~last_registered:(Dec 25)
-	      [from (Dec 2) ~till:(Jun 15) (Every_ Sat)
-		    ~except:[Dec 30; Jan 6; Jan 13]
-	       => (10|:30, 12|:30);
-	       [Nov 25, 15|:00, 17|:00];
-	       [Dec 28; Jan 4]
-	       => (16|:00, 18|:00)
-	      ];
+	     cp "Fresnes-STL" ~last_registered:(Dec 25)
+		[from (Dec 2) ~till:(Jun 15) (Every_ Sat)
+		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Feb 3]
+		 => (10|:30, 12|:30);
+		 [Nov 25, 15|:00, 17|:00];
+		 [Dec 28; Jan 4]
+		 => (16|:00, 18|:00)
+		];
 
-	   cp "Saméon" ~last_registered:(Dec 25)
-	      [from (Nov 16) ~till:(Jun 12)  (Every_ Wed)
-		    ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
-			     Jan 3; Jan 10]  
-	       => (17|:15, 18|:45);
-	       [Jan 10, 18|:00, 19|:00;
-		Jan 13, 13|:15, 13|:45];
-	       [Dec 29; Jan 2; Jan 3; Jan 6]
-	       => (10|:30, 12|:00)
-	      ];
+	     cp "Saméon" ~last_registered:(Dec 25)
+		[from (Nov 16) ~till:(Jun 12)  (Every_ Wed)
+		      ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
+			       Jan 3; Jan 10]  
+		 => (17|:15, 18|:45);
+		 [Jan 10, 18|:00, 19|:00;
+		  Jan 13, 13|:15, 13|:45];
+		 [Dec 29; Jan 2; Jan 3; Jan 6]
+		 => (10|:30, 12|:00)
+		];
 
-	   cp "Flines-lez-Râches" ~last_registered:(Dec 25)
-	      [from (Sep 29) ~till:(Jun 15)  (Every_ Fri)
-		    ~except:[Oct 6; Oct 27; Nov 3; Nov 10; Nov 17; Dec 29;
-			     Jan 5]
-	       => (17|:30, 19|:00);
-	       [Oct 7; Oct 24]
-	       => (13|:30, 15|:00)
-	      ];
+	     cp "Flines-lez-Râches" ~last_registered:(Dec 25)
+		[from (Sep 29) ~till:(Jun 15)  (Every_ Fri)
+		      ~except:[Oct 6; Oct 27; Nov 3; Nov 10; Nov 17; Dec 29;
+			       Jan 5]
+		 => (17|:30, 19|:00);
+		 [Oct 7; Oct 24]
+		 => (13|:30, 15|:00)
+		];
 
-	   cp "Aix-lez-Orchies" ~last_registered:(Dec 25)
-	      [from (Oct 1) ~till:(Jun 15) (Every_ Tue)
-		    ~except:[Oct 24; Oct 31; Nov 14; Dec 19; Dec 26;
-			     Jan 2]
-	       => (17|:30, 19|:00);
-	       [Sep 18, 18|:30, 20|:00;
-		Sep 23, 11|:30, 13|:00;
-		Oct 24, 09|:00, 10|:30]
-	      ];
+	     cp "Aix-lez-Orchies" ~last_registered:(Dec 25)
+		[from (Oct 1) ~till:(Jun 15) (Every_ Tue)
+		      ~except:[Oct 24; Oct 31; Nov 14; Dec 19; Dec 26;
+			       Jan 2]
+		 => (17|:30, 19|:00);
+		 [Sep 18, 18|:30, 20|:00;
+		  Sep 23, 11|:30, 13|:00;
+		  Oct 24, 09|:00, 10|:30]
+		];
 
-	   cp "Saint-Amand" ~last_registered:(Dec 25)
-	      [[Nov 8; Nov 22]
-	       => (13|:15, 14|:15)];
+	     cp "Saint-Amand" ~last_registered:(Dec 25)
+		[[Nov 8; Nov 22]
+		 => (13|:15, 14|:15)];
 
-	   cp "Valenciennes" ~last_registered:(Dec 1)
-	      [[Dec 15, 20|:15, 21|:15;
-		Dec 17, 18|:00, 20|:00]];
+	     cp "Valenciennes" ~last_registered:(Dec 1)
+		[[Dec 15, 20|:15, 21|:15;
+		  Dec 17, 18|:00, 20|:00]];
 
-	   cpn "Nomain"
-	       [[Dec 9, 13|:15, 15|:15;
-		 Dec 16, 13|:15, 14|:15];
-		[Jan 2; Jan 3; Jan 6]
-		=> (08|:30, 10|:00)];
-	   
-	   labbe "2 6" [Mon, 15; Tue, 10; Fri, 11];
-	   labbe "1 STMG1" [Mon, 14; Tue, 9; Fri, 10];
-	   labbe "2 6 - 2" [Mon, 8];
-	   labbe "2 6 - 1" [Mon, 9];
-	   
-	   event "Réunion" "Douai"
-		 (let reun_mon =
-		    let filter (d,_,_) =
-		      match d with
-			Sep n -> n >= 18
-		      | Dec n -> n <> 4
-		      | _ -> true
-		    in 
-		    labbe_0 Mon ~filter (16|:55, 18|:00)
-		  and reun_tue =
-		    let filter (d,_,_) =
-		      match d with
-			Sep n -> n = 19
-		      | Oct n -> n >= 10
-		      | _ -> true
-		    in 
-		    labbe_0 Tue ~filter (14|:00, 15|:00)
-		  and reun_fri =
-		    let filter (d,_,_) =
-		      match d with
-			Sep _ -> false
-		      | Oct n -> n >= 13
-		      | _ -> true
+	     cpn "Nomain"
+		 [[Dec 9, 13|:15, 15|:15;
+		   Dec 16, 13|:15, 14|:15];
+		  [Jan 2; Jan 3; Jan 6]
+		  => (08|:30, 10|:00)]]
+       )
+let enseignement =
+  Date.( split_elements
+	   [
+	     labbe "2 6" [Mon, 15; Tue, 10; Fri, 11];
+	     labbe "1 STMG1" [Mon, 14; Tue, 9; Fri, 10];
+	     labbe "2 6 - 2" [Mon, 8];
+	     labbe "2 6 - 1" [Mon, 9];
+
+	     event "Réunion" "Douai"
+		   (let reun_mon =
+		      let filter (d,_,_) =
+			match d with
+			  Sep n -> n >= 18
+			| Dec n -> n <> 4
+			| Jan n -> n <> 15
+			| _ -> true
+		      in 
+		      labbe_0 Mon ~filter (16|:55, 18|:00)
+		    and reun_tue =
+		      let filter (d,_,_) =
+			match d with
+			  Sep n -> n = 19
+			| Oct n -> n >= 10
+			| _ -> true
+		      in 
+		      labbe_0 Tue ~filter (14|:00, 15|:00)
+		    and reun_fri =
+		      let filter (d,_,_) =
+			match d with
+			  Sep _ -> false
+			| Oct n -> n >= 13
+			| _ -> true
+		      in
+		      labbe_0 Fri ~filter (15|:00, 16|:00)
 		    in
-		    labbe_0 Fri ~filter (15|:00, 16|:00)
-		  in
-		  [[Oct 6, 15|:00, 16|:00;
-		    Nov 18, 08|:30, 12|:00;
-		    Jan 13, 08|:30, 12|:00];
-		   reun_mon;
-		   reun_tue;
-		   reun_fri]
-		 );
-	   
-	   form "LV"
-		[from (Sep 13) ~till:(Oct 11) Every_2weeks
-		 => (10|:00, 12|:00);
-		 [Jan 25; Feb 15; Mar 15]
-		 => (09|:30, 11|:30)
-		];
+		    [[Oct 6, 15|:00, 16|:00;
+		      Nov 18, 08|:30, 12|:00;
+		      Jan 13, 08|:30, 12|:00];
+		     reun_mon;
+		     reun_tue;
+		     reun_fri]
+		   );
+	     event "CC" "Douai"
+		   [[Nov 30, 16|:55, 18|:15;
+		     Dec 6, 16|:00, 17|:30]];
+	     
+	     event "Réunion PP" "Douai"
+		   [[Dec 19, 18|:00, 21|:00]];
+	   ])
 
-	   form "TICE"
-		[[Sep 20, 13|:30, 14|:30;
-		  Nov 29, 13|:30, 15|:30;
-		  Feb 21, 13|:30, 16|:30]];
+let formations =
+  Date.( split_elements
+	   [
+	     form "LV"
+		  [from (Sep 13) ~till:(Oct 11) Every_2weeks
+		   => (10|:00, 12|:00);
+		   [Jan 25; Feb 15; Mar 15]
+		   => (09|:30, 11|:30)
+		  ];
 
-	   form "HisMaths"
-		[[Nov 8, 09|:00, 11|:00;
-		  Nov 22, 10|:00, 12|:00];
-		 List.append
-		    (from (Sep 20) ~till:(Nov 29) Every_2weeks
-			  ~except:[Nov 1; Nov 15])
-		    (from (Jan 31) ~till:(Mar 28) Every_2weeks
-			  ~except:[Feb 28])
-		 => (10|:00, 12|:00);
-		 [Jan 17; Apr 4]
-		 => (10|:00, 12|:00);
-		];
+	     form "TICE"
+		  [[Sep 20, 13|:30, 14|:30;
+		    Nov 29, 13|:30, 15|:30;
+		    Feb 21, 13|:30, 16|:30]];
 
-	   form "Didac"
-		[[Sep 14; Oct 5; Nov 23]
-		 => (09|:00, 12|:00);
-		 [Dec 7; Dec 13]
-		 => (10|:00, 12|:00);
-		 [Jan 10; Jan 17; Feb 7]
-		 => (09|:00, 11|:30);
-		 [Feb 21; Mar 21]
-		 => (09|:30, 11|:30)
-		];
-	   
-	   form "Rech"
-		[[Sep 13, 13|:30, 14|:00]];
+	     form "HisMaths"
+		  [[Nov 8, 09|:00, 11|:00;
+		    Nov 22, 10|:00, 12|:00];
+		   List.append
+		     (from (Sep 20) ~till:(Nov 29) Every_2weeks
+			   ~except:[Nov 1; Nov 15])
+		     (from (Jan 31) ~till:(Mar 28) Every_2weeks
+			   ~except:[Feb 28])
+		   => (10|:00, 12|:00);
+		   [Jan 24; Apr 4]
+		   => (10|:00, 12|:00);
+		  ];
 
-	   form "ContEx"
-		[[Sep 7; Sep 21; Oct 12; Nov 16; Nov 30; Dec 21;
-		  Jan 11; Feb 22; Mar 15; Mar 29; Apr 19]
-		 => (09|:00, 16|:00)];
-	   
-	   event "Formation" "Douai"
-		 [[Jan 18; Feb 1]
-		  => (09|:00, 16|:00)];
-	   
-	   form "SitPro"
-		[[Sep 6; Oct 18; Nov 15; Dec 13;
-		  Jan 17; Jan 31; Mar 14; Mar 28]
-		 => (13|:30, 16|:00)];
+	     form "Didac"
+		  [[Sep 14; Oct 5; Nov 23]
+		   => (09|:00, 12|:00);
+		   [Dec 7; Dec 13]
+		   => (10|:00, 12|:00);
+		   [Jan 10; Jan 17; Feb 7]
+		   => (09|:00, 11|:30);
+		   [Feb 21; Mar 21]
+		   => (09|:30, 11|:30)
+		  ];
+	     
+	     form "Rech"
+		  [[Sep 13, 13|:30, 14|:00]];
 
-	   event "Non dispo" "" [[Sep 26, 12|:00, 22|:00]];
-	   
-	   event "CC" "Douai"
-		 [[Nov 30, 16|:55, 18|:15;
-		   Dec 6, 16|:00, 17|:30]];
-	   
-	   event "Réunion PP" "Douai"
-		 [[Dec 19, 18|:00, 21|:00]]
-	 ])
+	     form "ContEx"
+		  [[Sep 7; Sep 21; Oct 12; Nov 16; Nov 30; Dec 21;
+		    Jan 11; Feb 22; Mar 15; Mar 29; Apr 19]
+		   => (09|:00, 16|:00)];
+	     
+	     event "Formation" ~eprecision:"Immersion" "Douai"
+		   [[Jan 18; Feb 1]
+		    => (09|:00, 16|:00)];
+	     
+	     form "SitPro"
+		  [[Sep 6; Oct 18; Nov 15; Dec 13;
+		    Jan 17; Jan 31; Mar 14; Mar 28]
+		   => (13|:30, 16|:00)];
+	   ])
+
+let divers =
+  Date.( split_elements
+	   [
+	     event "Non dispo" "" [[Sep 26, 12|:00, 22|:00]];
+
+	     event "Agreg" "Douai, Lille"
+		   [[Mar 22, 09|:00, 15|:00]]
+	   ])
+
+let t =
+  List.flatten [cours; enseignement; formations; divers]
