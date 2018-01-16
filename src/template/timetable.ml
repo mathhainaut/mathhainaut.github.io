@@ -297,7 +297,7 @@ let cours =
 	     cp "Aix-lez-Orchies" ~last_registered:(Dec 25)
 		[from (Oct 1) ~till:(Jun 15) (Every_ Tue)
 		      ~except:[Oct 24; Oct 31; Nov 14; Dec 19; Dec 26;
-			       Jan 2]
+			       Jan 2; Feb 6]
 		 => (17|:30, 19|:00);
 		 [Sep 18, 18|:30, 20|:00;
 		  Sep 23, 11|:30, 13|:00;
@@ -374,7 +374,7 @@ let formations =
 	     form "LV"
 		  [from (Sep 13) ~till:(Oct 11) Every_2weeks
 		   => (10|:00, 12|:00);
-		   [Jan 25; Feb 15; Mar 15]
+		   [Jan 25; Feb 15; Mar 22]
 		   => (09|:30, 11|:30)
 		  ];
 
