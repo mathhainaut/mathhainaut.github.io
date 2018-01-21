@@ -30,11 +30,11 @@ let gather_data s dateref =
   List.filter filterer Timetable.t, to_register
 
 let data_elt s =
-  let s' = Netconversion.convert
+  let s' = (*Netconversion.convert
              ~in_enc:(
                Netconversion.encoding_of_string  "iso-8859-1")
              ~out_enc:(
-               Netconversion.encoding_of_string  "utf8")
+               Netconversion.encoding_of_string  "utf8")*)
 	     s
   in
   [Nethtml.Data s']

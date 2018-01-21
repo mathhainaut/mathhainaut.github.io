@@ -154,8 +154,10 @@ let split_elements timetable =
               date, event)
              event.ewhen
   in
-  let lists =  List.map split_event timetable
-  in
+  List.map split_event timetable
+
+let merge events =
+  let lists = List.flatten events in
   let n = List.length lists in
   let a = Array.init n (fun i ->
                         List.sort (fun x y -> compare y x) (List.nth lists i))
@@ -218,26 +220,39 @@ let labbe_time =
   | 17, End -> 17|:50
   | t, _ -> invalid_arg (string_of_int t)
 
-let labbe_0 d ?(filter=fun _ -> true) time =
+let labbe_0 d ?(filter=fun _ -> true) ?(mover=fun a -> a) time =
   let merger l (start, till) =
     let dates = from start ~till ~except:days_off (Every_ d) in
     List.rev_append (dates => time) l
   in
   let full = List.fold_left merger [] periods
   in
-  List.filter filter full
+  List.filter filter (List.rev_map mover full) 
 
-let labbe_1 d filter h =
-  let time =
-    (labbe_time (h, Start)), (labbe_time (h, End))
+let labbe classe list modifs =
+  let switches = List.map
+		   (fun (d1, h1, d2, h2) ->
+		    let s1 = labbe_time (h1, Start)
+		    and e1 = labbe_time (h1, End)
+		    and s2 = labbe_time (h2, Start)
+		    and e2 = labbe_time (h2, End)
+		    in
+		    ((d1, s1, e1), (d2, s2, e2)))
+		   modifs
   in
-  labbe_0 d ~filter time
-
-let labbe classe ?(filter=fun _ -> true) list =
+  let mover heure =
+    try
+      List.assoc heure switches
+    with Not_found ->
+      heure
+  in
   let rec aux res = function
       [] -> res
     | (d, h) :: l ->
-       let list = labbe_1 d filter h in
+       let time =
+	 (labbe_time (h, Start)), (labbe_time (h, End))
+       in
+       let list = labbe_0 d ~mover time in
        aux (list::res) l
   in
   event "Cours" ~eprecision:classe "Douai" (aux [] list)
@@ -274,18 +289,19 @@ let cours =
 		 => (16|:00, 18|:00)
 		];
 
-	     cp "Saméon" ~last_registered:(Dec 25)
+	     cp "SamÃ©on" ~last_registered:(Dec 25)
 		[from (Nov 16) ~till:(Jun 12)  (Every_ Wed)
 		      ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
-			       Jan 3; Jan 10]  
+			       Jan 3; Jan 10; Jan 17]  
 		 => (17|:15, 18|:45);
 		 [Jan 10, 18|:00, 19|:00;
-		  Jan 13, 13|:15, 13|:45];
+		  Jan 13, 13|:15, 13|:45;
+		  Jan 18, 18|:00, 19|:30];
 		 [Dec 29; Jan 2; Jan 3; Jan 6]
 		 => (10|:30, 12|:00)
 		];
 
-	     cp "Flines-lez-Râches" ~last_registered:(Dec 25)
+	     cp "Flines-lez-RÃ¢ches" ~last_registered:(Dec 25)
 		[from (Sep 29) ~till:(Jun 15)  (Every_ Fri)
 		      ~except:[Oct 6; Oct 27; Nov 3; Nov 10; Nov 17; Dec 29;
 			       Jan 5]
@@ -321,12 +337,18 @@ let cours =
 let enseignement =
   Date.( split_elements
 	   [
-	     labbe "2 6" [Mon, 15; Tue, 10; Fri, 11];
-	     labbe "1 STMG1" [Mon, 14; Tue, 9; Fri, 10];
-	     labbe "2 6 - 2" [Mon, 8];
-	     labbe "2 6 - 1" [Mon, 9];
+	     labbe "2 6" [Mon, 15; Tue, 10; Fri, 11]
+		   [Dec 11, 15, Dec 11, 12;
+		    Jan 22, 15, Jan 22, 8;
+		    Jan 26, 11, Jan 22, 9];
+	     labbe "1 STMG1" [Mon, 14; Tue, 9; Fri, 10]
+		   [];
+	     labbe "2 6 - 2" [Mon, 8]
+		   [Jan 22, 8, Jan 26, 11];
+	     labbe "2 6 - 1" [Mon, 9]
+		   [Jan 22, 9, Jan 26, 12];
 
-	     event "Réunion" "Douai"
+	     event "RÃ©union" "Douai"
 		   (let reun_mon =
 		      let filter (d,_,_) =
 			match d with
@@ -349,6 +371,7 @@ let enseignement =
 			match d with
 			  Sep _ -> false
 			| Oct n -> n >= 13
+			| Jan n -> n <> 26
 			| _ -> true
 		      in
 		      labbe_0 Fri ~filter (15|:00, 16|:00)
@@ -364,7 +387,7 @@ let enseignement =
 		   [[Nov 30, 16|:55, 18|:15;
 		     Dec 6, 16|:00, 17|:30]];
 	     
-	     event "Réunion PP" "Douai"
+	     event "RÃ©union PP" "Douai"
 		   [[Dec 19, 18|:00, 21|:00]];
 	   ])
 
@@ -435,4 +458,4 @@ let divers =
 	   ])
 
 let t =
-  List.flatten [cours; enseignement; formations; divers]
+  merge [cours; enseignement; formations; divers]
