@@ -272,7 +272,7 @@ let cours =
 		      order to count removed lessons *)
 		 => (09|:00, 11|:00);
 		 from (Dec 2) ~till:(Jun 15) (Every_ Sat)
-		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Feb 3]
+		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27; Feb 3]
 		 => (08|:30, 10|:30);
 		 [Nov 25, 13|:00, 15|:00];
 		 [Jan 20, 09|:00, 11|:00];
@@ -282,7 +282,7 @@ let cours =
 
 	     cp "Fresnes-STL" ~last_registered:(Dec 25)
 		[from (Dec 2) ~till:(Jun 15) (Every_ Sat)
-		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Feb 3]
+		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27; Feb 3]
 		 => (10|:30, 12|:30);
 		 [Nov 25, 15|:00, 17|:00];
 		 [Dec 28; Jan 4]
@@ -389,6 +389,9 @@ let enseignement =
 	     
 	     event "Réunion PP" "Douai"
 		   [[Dec 19, 18|:00, 21|:00]];
+	     event "JPO" "Douai"
+		   [[Jan 27; Mar 24]
+		    => (08|:30, 13|:00)];
 	   ])
 
 let formations =
@@ -445,7 +448,7 @@ let formations =
 	     form "SitPro"
 		  [[Sep 6; Oct 18; Nov 15; Dec 13;
 		    Jan 17; Jan 31; Mar 14; Mar 28]
-		   => (13|:30, 16|:00)];
+		   => (13|:30, 16|:30)];
 	   ])
 
 let divers =
