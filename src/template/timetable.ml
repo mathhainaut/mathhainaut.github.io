@@ -354,7 +354,7 @@ let enseignement =
 			match d with
 			  Sep n -> n >= 18
 			| Dec n -> n <> 4
-			| Jan n -> n <> 15
+			| Jan n -> n <> 15 && n <> 29
 			| _ -> true
 		      in 
 		      labbe_0 Mon ~filter (16|:55, 18|:00)
