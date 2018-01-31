@@ -400,7 +400,7 @@ let formations =
 	     form "LV"
 		  [from (Sep 13) ~till:(Oct 11) Every_2weeks
 		   => (10|:00, 12|:00);
-		   [Jan 25; Feb ; Mar 22]
+		   [Jan 25; Feb 8; Mar 22]
 		   => (09|:30, 11|:30)
 		  ];
 
