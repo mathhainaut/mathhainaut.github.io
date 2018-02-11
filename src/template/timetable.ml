@@ -282,7 +282,8 @@ let cours =
 
 	     cp "Fresnes-STL" ~last_registered:(Dec 25)
 		[from (Dec 2) ~till:(Jun 15) (Every_ Sat)
-		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27; Feb 3]
+		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27;
+			       Feb 3; Feb 17]
 		 => (10|:30, 12|:30);
 		 [Nov 25, 15|:00, 17|:00];
 		 [Dec 28; Jan 4]
@@ -290,10 +291,12 @@ let cours =
 		];
 
 	     cp "Saméon" ~last_registered:(Dec 25)
-		[from (Nov 16) ~till:(Jun 12)  (Every_ Wed)
+		[from (Nov 16) ~till:(Jan 31)  (Every_ Wed)
 		      ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
 			       Jan 3; Jan 10; Jan 17]  
 		 => (17|:15, 18|:45);
+		 from (Feb 7) ~till:(Jun 30) (Every_ Wed)
+		 => (17|:45, 19|:15);
 		 [Jan 10, 18|:00, 19|:00;
 		  Jan 13, 13|:15, 13|:45;
 		  Jan 18, 18|:00, 19|:30];
@@ -328,6 +331,13 @@ let cours =
 		[[Dec 15, 20|:15, 21|:15;
 		  Dec 17, 18|:00, 20|:00]];
 
+	     cp "Nivelle" ~last_registered:(Feb 1)
+		[from (Feb 7) ~till:(Jun 15) (Every_ Wed)
+		      ~except:[Feb 21]
+		 => (15|:30, 17|:30);
+		 [Feb 17, 11|:00, 13|:00]
+		];
+		 
 	     cpn "Nomain"
 		 [[Dec 9, 13|:15, 15|:15;
 		   Dec 16, 13|:15, 14|:15];
@@ -342,7 +352,7 @@ let enseignement =
 		    Jan 22, 15, Jan 22, 8;
 		    Jan 26, 11, Jan 22, 9];
 	     labbe "1 STMG1" [Mon, 14; Tue, 9; Fri, 10]
-		   [];
+		   [Feb 5, 14, Feb 5, 11];
 	     labbe "2 6 - 2" [Mon, 8]
 		   [Jan 22, 8, Jan 26, 11];
 	     labbe "2 6 - 1" [Mon, 9]
@@ -355,6 +365,7 @@ let enseignement =
 			  Sep n -> n >= 18
 			| Dec n -> n <> 4
 			| Jan n -> n <> 15 && n <> 29
+			| Feb n -> n <> 12
 			| _ -> true
 		      in 
 		      labbe_0 Mon ~filter (16|:55, 18|:00)
@@ -363,6 +374,7 @@ let enseignement =
 			match d with
 			  Sep n -> n = 19
 			| Oct n -> n >= 10
+			| Feb n -> n <> 13
 			| _ -> true
 		      in 
 		      labbe_0 Tue ~filter (14|:00, 15|:00)

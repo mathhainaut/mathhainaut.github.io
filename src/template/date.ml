@@ -14,6 +14,23 @@ type month =
   | Nov of int
   | Dec of int
 
+let month_to_string md =
+  let m, d = match md with
+    | Jan n -> "Jan", n
+    | Feb n -> "Feb", n
+    | Mar n -> "Mar", n
+    | Apr n -> "Apr", n
+    | May n -> "May", n
+    | Jun n -> "Jun", n
+    | Jul n -> "Jul", n
+    | Aug n -> "Aug", n
+    | Sep n -> "Sep", n
+    | Oct n -> "Oct", n
+    | Nov n -> "Nov", n
+    | Dec n -> "Dec", n
+  in
+  m^" "^(string_of_int d)
+    
 let bissex y =
   if y < 1582 then y mod 4 = 0
   else y mod 400 = 0 || (y mod 4 = 0 && y mod 100 <> 0)

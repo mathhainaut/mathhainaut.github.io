@@ -40,7 +40,9 @@ val format_ymd : t -> string
 
 val get : t -> month * int
 (** "Inverse" of make. *)
-			 
+
+val month_to_string: month -> string
+				
 val today : unit -> t
 
 (**{2 Dates and days}*)
