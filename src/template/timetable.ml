@@ -230,29 +230,45 @@ let labbe_0 d ?(filter=fun _ -> true) ?(mover=fun a -> a) time =
   List.filter filter (List.rev_map mover full) 
 
 let labbe classe list modifs =
-  let switches = List.map
-		   (fun (d1, h1, d2, h2) ->
-		    let s1 = labbe_time (h1, Start)
-		    and e1 = labbe_time (h1, End)
-		    and s2 = labbe_time (h2, Start)
-		    and e2 = labbe_time (h2, End)
-		    in
-		    ((d1, s1, e1), (d2, s2, e2)))
-		   modifs
+  let a = [| []; [] |] in
+  let interpreter = function
+    | Some (d1, h1), Some (d2, h2) ->
+       let s1 = labbe_time (h1, Start)
+       and e1 = labbe_time (h1, End)
+       and s2 = labbe_time (h2, Start)
+       and e2 = labbe_time (h2, End)
+       in
+       a.(1) <- (d1, s1, e1) :: a.(1);
+       a.(0) <- (d2, s2, e2) :: a.(0)
+    | Some(d,h), None ->
+       let s = labbe_time (h, Start)
+       and e = labbe_time (h, End)
+       in
+       a.(1) <- (d,s,e) :: a.(1)
+    | None, Some(d,h) ->
+       let s = labbe_time (h, Start)
+       and e = labbe_time (h, End)
+       in
+       a.(0) <- (d,s,e) :: a.(0)
+    | None, None -> invalid_arg "labbe:interpreter"
   in
-  let mover heure =
-    try
-      List.assoc heure switches
-    with Not_found ->
-      heure
-  in
-  let rec aux res = function
-      [] -> res
-    | (d, h) :: l ->
+  List.iter interpreter modifs;
+    let rec aux res = function
+      [] ->  (a.(0))::res
+    | (day, h, opt) :: l ->
        let time =
 	 (labbe_time (h, Start)), (labbe_time (h, End))
        in
-       let list = labbe_0 d ~mover time in
+       let filter ((d,_,_) as heure) =
+	 not (List.mem heure a.(1)) &&
+	   (match opt with
+	      None -> true
+	    | Some (dd, df) ->
+	       let date = mkdate d in
+	       Date.diff_days (mkdate dd) date >= 0
+	       && Date.diff_days date (mkdate df) >= 0)
+       in
+       let list = labbe_0 day ~filter time in
        aux (list::res) l
   in
   event "Cours" ~eprecision:classe "Douai" (aux [] list)
@@ -265,14 +281,16 @@ let cours =
 	   [
 	     cag "Valenciennes"  [[Oct 24, 16|:00, 18|:00]];
 	     
-	     cp "Fresnes-S" ~last_registered:(Dec 25)
+	     cp "Fresnes-S" ~last_registered:(Feb 11)
 		[from (Aug 28) ~till:(Nov 4) (Every_ Sat)
 		      ~except:[Oct 14; Nov 11; Nov 18; Nov 25]
 		 (* Intentionally further than till date, in
 		      order to count removed lessons *)
 		 => (09|:00, 11|:00);
-		 from (Dec 2) ~till:(Jun 15) (Every_ Sat)
+		 from (Dec 2) ~till:(Feb 10) (Every_ Sat)
 		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27; Feb 3]
+		 => (08|:30, 10|:30);
+		 from (Mar 10) ~till:(Jun 15) (Every_ Sat)
 		 => (08|:30, 10|:30);
 		 [Nov 25, 13|:00, 15|:00];
 		 [Jan 20, 09|:00, 11|:00];
@@ -280,43 +298,47 @@ let cours =
 		 => (14|:00, 16|:00)
 		];
 
-	     cp "Fresnes-STL" ~last_registered:(Dec 25)
-		[from (Dec 2) ~till:(Jun 15) (Every_ Sat)
+	     cp "Fresnes-STL" ~last_registered:(Feb 11)
+		[from (Dec 2) ~till:(Feb 10) (Every_ Sat)
 		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27;
-			       Feb 3; Feb 17]
+			       Feb 3]
+		 => (10|:30, 12|:30);
+		 from (Mar 10) ~till:(Jun 15) (Every_ Sat)
 		 => (10|:30, 12|:30);
 		 [Nov 25, 15|:00, 17|:00];
 		 [Dec 28; Jan 4]
 		 => (16|:00, 18|:00)
 		];
 
-	     cp "Saméon" ~last_registered:(Dec 25)
+	     cp "Saméon" ~last_registered:(Feb 15)
 		[from (Nov 16) ~till:(Jan 31)  (Every_ Wed)
 		      ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
-			       Jan 3; Jan 10; Jan 17]  
+			       Jan 3; Jan 10; Jan 17; Feb 21]  
 		 => (17|:15, 18|:45);
-		 from (Feb 7) ~till:(Jun 30) (Every_ Wed)
+		 from (Mar 14) ~till:(Jun 30) (Every_ Wed)
+		      ~except:[Feb 14]
 		 => (17|:45, 19|:15);
 		 [Jan 10, 18|:00, 19|:00;
 		  Jan 13, 13|:15, 13|:45;
-		  Jan 18, 18|:00, 19|:30];
+		  Jan 18, 18|:00, 19|:30;
+		  Feb 7 , 17|:45, 19|:15];
 		 [Dec 29; Jan 2; Jan 3; Jan 6]
 		 => (10|:30, 12|:00)
 		];
 
-	     cp "Flines-lez-Râches" ~last_registered:(Dec 25)
+	     cp "Flines-lez-Râches" ~last_registered:(Feb 24)
 		[from (Sep 29) ~till:(Jun 15)  (Every_ Fri)
 		      ~except:[Oct 6; Oct 27; Nov 3; Nov 10; Nov 17; Dec 29;
-			       Jan 5]
+			       Jan 5; Feb 23]
 		 => (17|:30, 19|:00);
 		 [Oct 7; Oct 24]
 		 => (13|:30, 15|:00)
 		];
 
-	     cp "Aix-lez-Orchies" ~last_registered:(Dec 25)
+	     cp "Aix-lez-Orchies" ~last_registered:(Feb 20)
 		[from (Oct 1) ~till:(Jun 15) (Every_ Tue)
 		      ~except:[Oct 24; Oct 31; Nov 14; Dec 19; Dec 26;
-			       Jan 2; Feb 6]
+			       Jan 2; Feb 6; Feb 20]
 		 => (17|:30, 19|:00);
 		 [Sep 18, 18|:30, 20|:00;
 		  Sep 23, 11|:30, 13|:00;
@@ -331,32 +353,48 @@ let cours =
 		[[Dec 15, 20|:15, 21|:15;
 		  Dec 17, 18|:00, 20|:00]];
 
-	     cp "Nivelle" ~last_registered:(Feb 1)
-		[from (Feb 7) ~till:(Jun 15) (Every_ Wed)
+	     cp "Nivelle" ~last_registered:(Feb 21)
+		[from (Feb 21) ~till:(Jun 15) (Every_ Wed)
 		      ~except:[Feb 21]
 		 => (15|:30, 17|:30);
-		 [Feb 17, 11|:00, 13|:00]
+		 [Feb 7, 15|:30, 17|:30;
+		  Feb 17, 11|:00, 13|:00]
 		];
-		 
+	     
 	     cpn "Nomain"
 		 [[Dec 9, 13|:15, 15|:15;
 		   Dec 16, 13|:15, 14|:15];
 		  [Jan 2; Jan 3; Jan 6]
-		  => (08|:30, 10|:00)]]
-       )
+		  => (08|:30, 10|:00)];
+	     cp "Faumont"
+		[from (Mar 5) ~till:(Mar 9) (Every_day)
+		 => (08|:30, 10|:30)]
+	   ])
 let enseignement =
   Date.( split_elements
 	   [
-	     labbe "2 6" [Mon, 15; Tue, 10; Fri, 11]
-		   [Dec 11, 15, Dec 11, 12;
-		    Jan 22, 15, Jan 22, 8;
-		    Jan 26, 11, Jan 22, 9];
-	     labbe "1 STMG1" [Mon, 14; Tue, 9; Fri, 10]
-		   [Feb 5, 14, Feb 5, 11];
-	     labbe "2 6 - 2" [Mon, 8]
-		   [Jan 22, 8, Jan 26, 11];
-	     labbe "2 6 - 1" [Mon, 9]
-		   [Jan 22, 9, Jan 26, 12];
+	     labbe "2 6" [Mon, 15, None;
+			  Tue, 10, None;
+			  Fri, 11, None]
+		   [Some (Dec 11, 15), Some (Dec 11, 12);
+		    Some (Jan 22, 15), Some (Jan 22, 8);
+		    Some (Jan 26, 11), Some (Jan 22, 9);
+		    Some (Feb 20, 10), None;
+		    Some (Feb 23, 11), None;
+		    Some (Mar 19, 14), None];
+	     labbe "1 STMG1" [Mon, 14, Some (Sep 1, Feb 15);
+			      Mon, 11, Some (Feb 15, Jul 7);
+			      Tue, 9, None;
+			      Fri, 10, None]
+		   [Some (Feb 5, 14), Some (Feb 5, 11);
+		    Some (Feb 20, 9), None;
+		    Some (Feb 23, 10), None];
+	     labbe "2 6 - 2" [Mon, 8, None]
+		   [Some (Jan 22, 8), Some (Jan 26, 11);
+		    Some (Mar 19, 8), None];
+	     labbe "2 6 - 1" [Mon, 9, None]
+		   [Some (Jan 22, 9), Some (Jan 26, 12);
+		    Some (Mar 19, 9), None];
 
 	     event "Réunion" "Douai"
 		   (let reun_mon =
@@ -365,7 +403,7 @@ let enseignement =
 			  Sep n -> n >= 18
 			| Dec n -> n <> 4
 			| Jan n -> n <> 15 && n <> 29
-			| Feb n -> n <> 12
+			| Feb n -> n < 12
 			| _ -> true
 		      in 
 		      labbe_0 Mon ~filter (16|:55, 18|:00)
@@ -374,7 +412,7 @@ let enseignement =
 			match d with
 			  Sep n -> n = 19
 			| Oct n -> n >= 10
-			| Feb n -> n <> 13
+			| Feb n -> n < 13
 			| _ -> true
 		      in 
 		      labbe_0 Tue ~filter (14|:00, 15|:00)

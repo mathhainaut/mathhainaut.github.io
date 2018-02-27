@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+ 	   <title>Cours et formations M2 MÉEF et DU</title>
+  </head>
+  <body>
+<script type="text/javascript">
+var current_date = Date.now()
+
+function setDisp(date){
+var date = new Date(date);
+var elapsed = current_date.getTime() - date.getTime();
+if (elapsed < 0)
+  return "display:none"
+else
+  return "display:block"
+}
+
+function toggle(which){
+if (!document.getElementById)
+return
+if (which.style.display=="block")
+{which.style.display="none";}
+else
+{which.style.display="block";}
+}
+
+function toggle_underline(which)
+{
+if (!document.getElementById)
+return
+if (which.style.textDecoration=="underline")
+which.style.textDecoration="none";
+else
+which.style.textDecoration="underline";
+}
+</script>
+      <p>Dernière mise à jour au ${date_of_update}.</p>
+      
+      <p style="font-weight:bold">Les cours UE 3 (Recherche) sont dorénavant ajoutés.</p>
+      
+
+      <div id="graph_1" style="display:block" ml:content="form_graph"/>
+
+      <a href="javascript:toggle(document.getElementById('div_coming'))">
+        À venir</a> -
+      <div id="div_coming" style="display:block" ml:content="form_timetable coming"/>
+      <a href="javascript:toggle(document.getElementById('div_next'))">
+        Et plus tard</a> - 
+      <div id="div_next" style="display:none" ml:content="form_timetable next"/>     
+      <a href="javascript:toggle(document.getElementById('div_done'))">
+        Cours passés</a>
+     <div id="div_done" style="display:none" ml:content="form_timetable done"/>
+  </body>
+</html>
+    
