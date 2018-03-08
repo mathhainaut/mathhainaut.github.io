@@ -290,10 +290,12 @@ let cours =
 		 from (Dec 2) ~till:(Feb 10) (Every_ Sat)
 		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27; Feb 3]
 		 => (08|:30, 10|:30);
-		 from (Mar 10) ~till:(Jun 15) (Every_ Sat)
+		 (from (Mar 17) ~till:(Jun 15) (Every_ Sat)
+		  @ [Mar 3])
 		 => (08|:30, 10|:30);
-		 [Nov 25, 13|:00, 15|:00];
-		 [Jan 20, 09|:00, 11|:00];
+		 [Nov 25, 13|:00, 15|:00;
+		  Jan 20, 09|:00, 11|:00;
+		  Mar 8, 11|:15, 13|:15];
 		 [Dec 28; Jan 4]
 		 => (14|:00, 16|:00)
 		];
@@ -303,9 +305,11 @@ let cours =
 		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27;
 			       Feb 3]
 		 => (10|:30, 12|:30);
-		 from (Mar 10) ~till:(Jun 15) (Every_ Sat)
+		 (from (Mar 17) ~till:(Jun 15) (Every_ Sat)
+		  @ [Mar 3])
 		 => (10|:30, 12|:30);
-		 [Nov 25, 15|:00, 17|:00];
+		 [Nov 25, 15|:00, 17|:00;
+		  Mar 10, 08|:30, 10|:30];
 		 [Dec 28; Jan 4]
 		 => (16|:00, 18|:00)
 		];
@@ -323,26 +327,30 @@ let cours =
 		  Jan 18, 18|:00, 19|:30;
 		  Feb 7 , 17|:45, 19|:15];
 		 [Dec 29; Jan 2; Jan 3; Jan 6]
-		 => (10|:30, 12|:00)
+		 => (10|:30, 12|:00);
+		 [Mar 6; Mar 9]
+		 => (11|:00, 12|:30)
 		];
 
 	     cp "Flines-lez-Râches" ~last_registered:(Feb 24)
 		[from (Sep 29) ~till:(Jun 15)  (Every_ Fri)
 		      ~except:[Oct 6; Oct 27; Nov 3; Nov 10; Nov 17; Dec 29;
-			       Jan 5; Feb 23]
+			       Jan 5; Feb 23; Mar 2; Mar 9]
 		 => (17|:30, 19|:00);
 		 [Oct 7; Oct 24]
-		 => (13|:30, 15|:00)
+		 => (13|:30, 15|:00);
+		 [Mar 9, 13|:00, 14|:30]
 		];
 
 	     cp "Aix-lez-Orchies" ~last_registered:(Feb 20)
 		[from (Oct 1) ~till:(Jun 15) (Every_ Tue)
 		      ~except:[Oct 24; Oct 31; Nov 14; Dec 19; Dec 26;
-			       Jan 2; Feb 6; Feb 20]
+			       Jan 2; Feb 6; Feb 20; Feb 27; Mar 6]
 		 => (17|:30, 19|:00);
 		 [Sep 18, 18|:30, 20|:00;
 		  Sep 23, 11|:30, 13|:00;
-		  Oct 24, 09|:00, 10|:30]
+		  Oct 24, 09|:00, 10|:30;
+		  Mar 1, 09|:00, 10|:30]
 		];
 
 	     cp "Saint-Amand" ~last_registered:(Dec 25)
@@ -355,7 +363,7 @@ let cours =
 
 	     cp "Nivelle" ~last_registered:(Feb 21)
 		[from (Feb 21) ~till:(Jun 15) (Every_ Wed)
-		      ~except:[Feb 21]
+		      ~except:[Feb 21; Feb 28; Mar 7]
 		 => (15|:30, 17|:30);
 		 [Feb 7, 15|:30, 17|:30;
 		  Feb 17, 11|:00, 13|:00]
@@ -366,7 +374,7 @@ let cours =
 		   Dec 16, 13|:15, 14|:15];
 		  [Jan 2; Jan 3; Jan 6]
 		  => (08|:30, 10|:00)];
-	     cp "Faumont"
+	     cp "Faumont" ~last_registered:(Mar 1)
 		[from (Mar 5) ~till:(Mar 9) (Every_day)
 		 => (08|:30, 10|:30)]
 	   ])
@@ -450,7 +458,7 @@ let formations =
 	     form "LV"
 		  [from (Sep 13) ~till:(Oct 11) Every_2weeks
 		   => (10|:00, 12|:00);
-		   [Jan 25; Feb 8; Mar 22]
+		   [Jan 25; Feb 8; Apr 5]
 		   => (09|:30, 11|:30)
 		  ];
 
