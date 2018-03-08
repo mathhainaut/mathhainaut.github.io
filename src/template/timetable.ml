@@ -327,7 +327,7 @@ let cours =
 		  Jan 18, 18|:00, 19|:30;
 		  Feb 7 , 17|:45, 19|:15;
 		  Mar 6 , 11|:00, 12|:30;
-		  Mar 9 , 14|:00, 15|:30];
+		  Mar 9 , 13|:30, 15|:00];
 		 [Dec 29; Jan 2; Jan 3; Jan 6]
 		 => (10|:30, 12|:00);
 		];
@@ -389,14 +389,17 @@ let enseignement =
 		    Some (Jan 26, 11), Some (Jan 22, 9);
 		    Some (Feb 20, 10), None;
 		    Some (Feb 23, 11), None;
-		    Some (Mar 19, 14), None];
+		    Some (Mar 19, 15), None;
+		    Some (Mar 20, 10), None ];
 	     labbe "1 STMG1" [Mon, 14, Some (Sep 1, Feb 15);
 			      Mon, 11, Some (Feb 15, Jul 7);
 			      Tue, 9, None;
 			      Fri, 10, None]
 		   [Some (Feb 5, 14), Some (Feb 5, 11);
 		    Some (Feb 20, 9), None;
-		    Some (Feb 23, 10), None];
+		    Some (Feb 23, 10), None;
+		    Some (Mar 19, 11), None;
+		    Some (Mar 20, 9), None];
 	     labbe "2 6 - 2" [Mon, 8, None]
 		   [Some (Jan 22, 8), Some (Jan 26, 11);
 		    Some (Mar 19, 8), None];
