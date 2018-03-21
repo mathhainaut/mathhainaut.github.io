@@ -290,8 +290,8 @@ let cours =
 		 from (Dec 2) ~till:(Feb 10) (Every_ Sat)
 		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27; Feb 3]
 		 => (08|:30, 10|:30);
-		 (from (Mar 17) ~till:(Jun 15) (Every_ Sat)
-		  @ [Mar 3])
+		 (from (Mar 31) ~till:(Jun 15) (Every_ Sat)
+		  @ [Mar 3; Mar 17])
 		 => (08|:30, 10|:30);
 		 [Nov 25, 13|:00, 15|:00;
 		  Jan 20, 09|:00, 11|:00;
@@ -305,8 +305,8 @@ let cours =
 		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27;
 			       Feb 3]
 		 => (10|:30, 12|:30);
-		 (from (Mar 17) ~till:(Jun 15) (Every_ Sat)
-		  @ [Mar 3])
+		 (from (Mar 31) ~till:(Jun 15) (Every_ Sat)
+		  @ [Mar 3; Mar 17])
 		 => (10|:30, 12|:30);
 		 [Nov 25, 15|:00, 17|:00;
 		  Mar 10, 08|:30, 10|:30];
@@ -319,15 +319,14 @@ let cours =
 		      ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
 			       Jan 3; Jan 10; Jan 17; Feb 21]  
 		 => (17|:15, 18|:45);
-		 from (Mar 14) ~till:(Jun 30) (Every_ Wed)
+		 from (Mar 28) ~till:(Jun 30) (Every_ Wed)
 		      ~except:[Feb 14]
 		 => (17|:45, 19|:15);
 		 [Jan 10, 18|:00, 19|:00;
 		  Jan 13, 13|:15, 13|:45;
 		  Jan 18, 18|:00, 19|:30;
 		  Feb 7 , 17|:45, 19|:15;
-		  Mar 6 , 11|:00, 12|:30;
-		  Mar 9 , 13|:30, 15|:00];
+		  Mar 6 , 11|:00, 12|:30];
 		 [Dec 29; Jan 2; Jan 3; Jan 6]
 		 => (10|:30, 12|:00);
 		];
@@ -362,7 +361,7 @@ let cours =
 		  Dec 17, 18|:00, 20|:00]];
 
 	     cp "Nivelle" ~last_registered:(Feb 21)
-		[from (Feb 21) ~till:(Jun 15) (Every_ Wed)
+		[from (Apr 4) ~till:(Jun 15) (Every_ Wed)
 		      ~except:[Feb 21; Feb 28; Mar 7]
 		 => (15|:30, 17|:30);
 		 [Feb 7, 15|:30, 17|:30;
