@@ -281,7 +281,7 @@ let cours =
 	   [
 	     cag "Valenciennes"  [[Oct 24, 16|:00, 18|:00]];
 	     
-	     cp "Fresnes-S" ~last_registered:(Feb 11)
+	     cp "Fresnes-S" ~last_registered:(Mar 23)
 		[from (Aug 28) ~till:(Nov 4) (Every_ Sat)
 		      ~except:[Oct 14; Nov 11; Nov 18; Nov 25]
 		 (* Intentionally further than till date, in
@@ -300,7 +300,7 @@ let cours =
 		 => (14|:00, 16|:00)
 		];
 
-	     cp "Fresnes-STL" ~last_registered:(Feb 11)
+	     cp "Fresnes-STL" ~last_registered:(Mar 23)
 		[from (Dec 2) ~till:(Feb 10) (Every_ Sat)
 		      ~except:[Dec 30; Jan 6; Jan 13; Jan 20; Jan 27;
 			       Feb 3]
@@ -314,7 +314,7 @@ let cours =
 		 => (16|:00, 18|:00)
 		];
 
-	     cp "Saméon" ~last_registered:(Feb 15)
+	     cp "Saméon" ~last_registered:(Mar 23)
 		[from (Nov 16) ~till:(Jan 31)  (Every_ Wed)
 		      ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
 			       Jan 3; Jan 10; Jan 17; Feb 21]  
@@ -331,7 +331,7 @@ let cours =
 		 => (10|:30, 12|:00);
 		];
 
-	     cp "Flines-lez-Râches" ~last_registered:(Feb 24)
+	     cp "Flines-lez-Râches" ~last_registered:(Mar 24)
 		[from (Sep 29) ~till:(Jun 15)  (Every_ Fri)
 		      ~except:[Oct 6; Oct 27; Nov 3; Nov 10; Nov 17; Dec 29;
 			       Jan 5; Feb 23; Mar 2; Mar 9]
@@ -341,15 +341,17 @@ let cours =
 		 [Mar 9, 10|:45, 12|:15]
 		];
 
-	     cp "Aix-lez-Orchies" ~last_registered:(Feb 20)
+	     cp "Aix-lez-Orchies" ~last_registered:(Mar 23)
 		[from (Oct 1) ~till:(Jun 15) (Every_ Tue)
 		      ~except:[Oct 24; Oct 31; Nov 14; Dec 19; Dec 26;
-			       Jan 2; Feb 6; Feb 20; Feb 27; Mar 6]
+			       Jan 2; Feb 6; Feb 20; Feb 27; Mar 6;
+			       Mar 20; Mar 27]
 		 => (17|:30, 19|:00);
 		 [Sep 18, 18|:30, 20|:00;
 		  Sep 23, 11|:30, 13|:00;
 		  Oct 24, 09|:00, 10|:30;
-		  Mar 1, 09|:00, 10|:30]
+		  Mar 1, 09|:00, 10|:30;
+		  Mar 26, 18|:30, 20|:00]
 		];
 
 	     cp "Saint-Amand" ~last_registered:(Dec 25)
@@ -373,7 +375,7 @@ let cours =
 		   Dec 16, 13|:15, 14|:15];
 		  [Jan 2; Jan 3; Jan 6]
 		  => (08|:30, 10|:00)];
-	     cp "Faumont" ~last_registered:(Mar 1)
+	     cp "Faumont" ~last_registered:(Mar 23)
 		[from (Mar 5) ~till:(Mar 9) (Every_day)
 		 => (08|:30, 10|:30)]
 	   ])
@@ -414,6 +416,7 @@ let enseignement =
 			| Dec n -> n <> 4
 			| Jan n -> n <> 15 && n <> 29
 			| Feb n -> n < 12
+			| Mar n -> n = 12 || n = 26
 			| _ -> true
 		      in 
 		      labbe_0 Mon ~filter (16|:55, 18|:00)
@@ -423,6 +426,7 @@ let enseignement =
 			  Sep n -> n = 19
 			| Oct n -> n >= 10
 			| Feb n -> n < 13
+			| Mar n -> n = 13
 			| _ -> true
 		      in 
 		      labbe_0 Tue ~filter (14|:00, 15|:00)
@@ -432,6 +436,8 @@ let enseignement =
 			  Sep _ -> false
 			| Oct n -> n >= 13
 			| Jan n -> n <> 26
+			| Feb n -> n < 19
+			| Mar n -> n = 30
 			| _ -> true
 		      in
 		      labbe_0 Fri ~filter (15|:00, 16|:00)
@@ -445,10 +451,12 @@ let enseignement =
 		   );
 	     event "CC" "Douai"
 		   [[Nov 30, 16|:55, 18|:15;
-		     Dec 6, 16|:00, 17|:30]];
+		     Dec 6, 16|:00, 17|:30;
+		     Mar 15, 16|:55, 19|:00]];
 	     
 	     event "Réunion PP" "Douai"
-		   [[Dec 19, 18|:00, 21|:00]];
+		   [[Dec 19, 18|:00, 21|:00;
+		     Mar 20, 18|:00, 21|:00]];
 	     event "JPO" "Douai"
 		   [[Jan 27; Mar 24]
 		    => (08|:30, 13|:00)];
