@@ -364,14 +364,14 @@ let cours =
 		  Dec 17, 18|:00, 20|:00]];
 
 	     cp "Nivelle" ~last_registered:(Feb 21)
-		[from (Apr 5) ~till:(Jun 15) (Every_ Wed)
+		[from (Apr 4) ~till:(Jun 15) (Every_ Wed)
 		      ~except:[Feb 21; Feb 28; Mar 7]
 		 => (15|:30, 17|:30);
 		 [Feb 7, 15|:30, 17|:30;
 		  Feb 17, 11|:00, 13|:00]
 		];
 	     cp "Pont-à-Marcq" ~last_registered:(Apr 1)
-		[from (Apr 6) ~till:(Jun 15) (Every_ Thu)
+		[from (Apr 5) ~till:(Jun 15) (Every_ Thu)
 		 => (17|:00, 19|:00)
 		];
 	     cpn "Nomain"
