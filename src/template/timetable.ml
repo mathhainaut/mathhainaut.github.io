@@ -319,14 +319,15 @@ let cours =
 		      ~except:[Dec 6; Dec 13; Dec 20; Dec 27;
 			       Jan 3; Jan 10; Jan 17; Feb 21]  
 		 => (17|:15, 18|:45);
-		 from (Mar 28) ~till:(Jun 30) (Every_ Wed)
+		 from (Apr 12) ~till:(Jun 30) (Every_ Wed)
 		      ~except:[Feb 14]
 		 => (17|:45, 19|:15);
 		 [Jan 10, 18|:00, 19|:00;
 		  Jan 13, 13|:15, 13|:45;
 		  Jan 18, 18|:00, 19|:30;
 		  Feb 7 , 17|:45, 19|:15;
-		  Mar 6 , 11|:00, 12|:30];
+		  Mar 6 , 11|:00, 12|:30;
+		  Mar 28, 18|:00, 19|:30];
 		 [Dec 29; Jan 2; Jan 3; Jan 6]
 		 => (10|:30, 12|:00);
 		];
@@ -363,13 +364,16 @@ let cours =
 		  Dec 17, 18|:00, 20|:00]];
 
 	     cp "Nivelle" ~last_registered:(Feb 21)
-		[from (Apr 4) ~till:(Jun 15) (Every_ Wed)
+		[from (Apr 5) ~till:(Jun 15) (Every_ Wed)
 		      ~except:[Feb 21; Feb 28; Mar 7]
 		 => (15|:30, 17|:30);
 		 [Feb 7, 15|:30, 17|:30;
 		  Feb 17, 11|:00, 13|:00]
 		];
-	     
+	     cp "Pont-à-Marcq" ~last_registered:(Apr 1)
+		[from (Apr 6) ~till:(Jun 15) (Every_ Thu)
+		 => (17|:00, 19|:00)
+		];
 	     cpn "Nomain"
 		 [[Dec 9, 13|:15, 15|:15;
 		   Dec 16, 13|:15, 14|:15];
